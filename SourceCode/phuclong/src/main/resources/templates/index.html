@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phúc Long - Demo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f0;
+      color: #26352b;
+    }
+
+    header {
+      background: #174b36;
+      color: white;
+      padding: 25px 8%;
+    }
+
+    header h1 {
+      margin: 0;
+      letter-spacing: 2px;
+    }
+
+    header p {
+      margin-bottom: 0;
+      color: #d5e6d9;
+    }
+
+    main {
+      max-width: 950px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 15px #00000010;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #174b36;
+    }
+
+    button {
+      background: #174b36;
+      color: white;
+      border: none;
+      padding: 11px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #26704d;
+    }
+
+    .message {
+      border-bottom: 1px solid #eee;
+      padding: 17px 0;
+    }
+
+    .message:last-child {
+      border-bottom: none;
+    }
+
+    .message small {
+      display: block;
+      color: #888;
+      margin-top: 7px;
+    }
+
+    #status {
+      color: #26704d;
+      margin: 15px 0;
+    }
+
+    footer {
+      text-align: center;
+      color: #888;
+      padding: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>PHÚC LONG</h1>
+  <p>Demo Java Web - Spring Boot & SQL Server</p>
+</header>
+
+<main>
+  <div class="card">
+
+    <h2>Danh sách dữ liệu</h2>
+
+    <p>Dữ liệu được tải trực tiếp từ Database PHUCLONG.</p>
+
+    <button onclick="loadMessages()">
+      Tải lại dữ liệu
+    </button>
+
+    <div id="status">Đang kết nối...</div>
+
+    <div id="messageList"></div>
+
+  </div>
+</main>
+
+<footer>
+  PHÚC LONG DEMO APPLICATION
+</footer>
+
+<script>
+  async function loadMessages() {
+    const status = document.getElementById("status");
+    const list = document.getElementById("messageList");
+
+    status.textContent = "Đang tải dữ liệu...";
+    list.innerHTML = "";
+
+    try {
+      const response = await fetch("/api/demo/messages");
+
+      if (!response.ok) {
+        throw new Error("Không thể lấy dữ liệu");
+      }
+
+      const messages = await response.json();
+
+      status.textContent =
+              "Kết nối thành công! Có " +
+              messages.length + " bản ghi.";
+
+      messages.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "message";
+
+        const content = document.createElement("strong");
+        content.textContent = item.content;
+
+        const detail = document.createElement("small");
+        detail.textContent =
+                "ID: " + item.id +
+                " | Thời gian: " + item.createdAt;
+
+        div.appendChild(content);
+        div.appendChild(detail);
+        list.appendChild(div);
+      });
+
+      if (messages.length === 0) {
+        list.textContent = "Database chưa có dữ liệu.";
+      }
+
+    } catch (error) {
+      status.textContent = "Lỗi: " + error.message;
+    }
+  }
+
+  loadMessages();
+</script>
+
+</body>
+</html>
