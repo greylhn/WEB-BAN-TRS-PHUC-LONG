@@ -1,0 +1,1332 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
+
+/* PHUC LONG POS DASHBOARD - CSS dong bo voi dashboard.html */
+:root {
+    --pl-green: #07513b;
+    --pl-green-dark: #043f31;
+    --pl-accent: #0da982;
+    --pl-gold: #c99b35;
+    --pl-bg: #f3f6f5;
+    --pl-text: #26352f;
+    --pl-muted: #87948e;
+    --pl-border: #e9efec;
+    --pl-white: #fff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif;
+    color: var(--pl-text);
+    background: var(--pl-bg);
+    font-size: 13px;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Khung tong: sidebar | dashboard | ban hang nhanh */
+.pos-layout {
+    display: grid;
+    grid-template-columns: 218px minmax(430px, 1fr) 292px;
+    width: 100%;
+    max-width: 1920px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background: var(--pl-bg);
+}
+
+/* SIDEBAR */
+.pos-layout > .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    min-height: 650px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 13px 16px;
+    color: #fff;
+    background: linear-gradient(180deg, #07513b 0%, #043f31 100%);
+}
+
+.pos-layout .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 2px 8px 27px;
+    border-bottom: 1px solid rgba(255,255,255,.13);
+}
+
+.pos-layout .brand-logo {
+    width: 43px;
+    height: 43px;
+    flex: 0 0 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    color: #07513b;
+    background: #e7c875;
+    font-size: 21px;
+    overflow: hidden;
+}
+
+.pos-layout .brand-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.pos-layout .brand-name h2 {
+    margin: 0;
+    color: #fff;
+    background: none;
+    padding: 0;
+    font-size: 15px;
+    line-height: 1.4;
+    letter-spacing: .4px;
+    font-weight: 800;
+}
+
+.pos-layout .brand-name span {
+    display: block;
+    color: #c6ddd2;
+    font-size: 8px;
+    letter-spacing: 2px;
+    margin-top: 2px;
+}
+
+.pos-layout .menu-label {
+    padding: 23px 11px 10px;
+    color: #a9c9b9;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+}
+
+.pos-layout .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.pos-layout .menu-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 43px;
+    padding: 10px 12px;
+    border-radius: 9px;
+    color: #d6e6de;
+    font-size: 11px;
+    font-weight: 500;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.pos-layout .menu-link i {
+    width: 18px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.pos-layout .menu-link:hover {
+    color: #fff;
+    background: rgba(255,255,255,.12);
+    transform: translateX(3px);
+}
+
+.pos-layout .menu-link.active {
+    color: #064b37;
+    background: #fff;
+    font-weight: 700;
+    box-shadow: 0 5px 14px rgba(0,0,0,.12);
+}
+
+.pos-layout .sidebar-bottom {
+    margin-top: auto;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 11px;
+    background: rgba(255,255,255,.07);
+}
+
+.pos-layout .help-icon {
+    margin-bottom: 9px;
+    color: #e7c875;
+    font-size: 20px;
+}
+
+.pos-layout .sidebar-bottom h4 {
+    margin: 0 0 6px;
+    color: #fff;
+    font-size: 11px;
+}
+
+.pos-layout .sidebar-bottom p {
+    margin: 0 0 12px;
+    color: #c1d8cd;
+    font-size: 9px;
+    line-height: 1.7;
+}
+
+.pos-layout .support-btn {
+    width: 100%;
+    padding: 9px;
+    border: 0;
+    border-radius: 7px;
+    color: #064b37;
+    background: #e7c875;
+    font-size: 9px;
+    font-weight: 700;
+    transition: .2s ease;
+}
+
+.pos-layout .support-btn:hover {
+    color: #064b37;
+    background: #f2d990;
+    transform: translateY(-1px);
+}
+
+.pos-layout .logout-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 17px 10px 2px;
+    color: #c8ddd3;
+    font-size: 10px;
+    transition: color .2s;
+}
+
+.pos-layout .logout-link:hover {
+    color: #fff;
+}
+
+/* KHU VUC NOI DUNG */
+.pos-layout > .main-area {
+    min-width: 0;
+    background: var(--pl-bg);
+}
+
+.pos-layout .topbar {
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    min-height: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 21px;
+    color: #fff;
+    background: var(--pl-green);
+    box-shadow: 0 2px 9px rgba(0,0,0,.06);
+}
+
+.pos-layout .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.pos-layout .topbar-center {
+    color: #d5e5dd;
+    font-size: 9px;
+    text-align: center;
+}
+
+.pos-layout .topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.pos-layout .notification-btn {
+    position: relative;
+    padding: 5px;
+    border: 0;
+    color: #fff;
+    background: transparent;
+    font-size: 16px;
+}
+
+.pos-layout .notification-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 7px;
+    height: 7px;
+    border: 1px solid var(--pl-green);
+    border-radius: 50%;
+    background: #ef6868;
+}
+
+.pos-layout .user-avatar {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: #5e4810;
+    background: #e7c875;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.pos-layout .user-details strong,
+.pos-layout .user-details small {
+    display: block;
+}
+
+.pos-layout .user-details strong {
+    color: #fff;
+    font-size: 10px;
+}
+
+.pos-layout .user-details small {
+    margin-top: 3px;
+    color: #c5dcd1;
+    font-size: 8px;
+}
+
+.pos-layout .user-arrow {
+    color: #d5e5dd;
+    font-size: 9px;
+}
+
+.pos-layout .mobile-menu {
+    display: none;
+    padding: 4px;
+    border: 0;
+    color: #fff;
+    background: transparent;
+}
+
+.pos-layout .dashboard-content {
+    padding: 22px 18px 14px;
+}
+
+.pos-layout .page-heading {
+    margin: 0 0 18px;
+}
+
+.pos-layout .page-heading h1 {
+    margin: 0 0 6px;
+    padding: 0;
+    color: #203c30;
+    background: transparent;
+    font-size: 19px;
+    line-height: 1.4;
+    letter-spacing: 0;
+    font-weight: 800;
+}
+
+.pos-layout .page-heading p {
+    margin: 0;
+    color: var(--pl-muted);
+    font-size: 10px;
+}
+
+/* THE THONG KE */
+.pos-layout .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 11px;
+    margin-bottom: 15px;
+}
+
+.pos-layout .stat-card {
+    min-width: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 7px;
+    padding: 14px 11px;
+    border: 1px solid var(--pl-border);
+    border-radius: 11px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(20,60,35,.035);
+    transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.pos-layout .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(20,60,35,.09);
+}
+
+.pos-layout .stat-info {
+    min-width: 0;
+}
+
+.pos-layout .stat-info > span {
+    display: block;
+    color: #78877f;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.pos-layout .stat-info h2 {
+    margin: 8px 0 7px;
+    padding: 0;
+    color: #174b32;
+    background: transparent;
+    font-size: clamp(13px, 1.35vw, 19px);
+    line-height: 1.3;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.pos-layout .stat-info small {
+    display: block;
+    font-size: 8px;
+    white-space: nowrap;
+}
+
+.pos-layout .stat-info small span {
+    color: #9aa59f;
+    margin-left: 2px;
+}
+
+.pos-layout .increase {
+    color: #26a879;
+}
+
+.pos-layout .decrease {
+    color: #dc7070;
+}
+
+.pos-layout .stat-icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.pos-layout .green-icon {
+    color: #20a875;
+    background: #e1f5eb;
+}
+
+.pos-layout .blue-icon {
+    color: #548fd0;
+    background: #e6effc;
+}
+
+.pos-layout .purple-icon {
+    color: #9868c5;
+    background: #f1e9fb;
+}
+
+.pos-layout .yellow-icon {
+    color: #c59b2c;
+    background: #fff5d9;
+}
+
+/* CAC KHOI BIEU DO VA SAN PHAM */
+.pos-layout .middle-grid,
+.pos-layout .bottom-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 13px;
+    margin-bottom: 14px;
+}
+
+.pos-layout .content-card {
+    min-width: 0;
+    padding: 15px 13px;
+    border: 1px solid var(--pl-border);
+    border-radius: 11px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(20,60,35,.035);
+}
+
+.pos-layout .card-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 13px;
+}
+
+.pos-layout .card-heading h3 {
+    margin: 0;
+    color: #294437;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.pos-layout .card-heading p {
+    margin: 5px 0 0;
+    color: #98a39d;
+    font-size: 8px;
+}
+
+.pos-layout .chart-filter {
+    display: flex;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 20px;
+    background: #f0f4f1;
+}
+
+.pos-layout .chart-filter button {
+    padding: 5px 9px;
+    border: 0;
+    border-radius: 16px;
+    color: #78877f;
+    background: transparent;
+    font-size: 8px;
+}
+
+.pos-layout .chart-filter button:hover {
+    color: var(--pl-green);
+    background: #e0eee6;
+    box-shadow: none;
+}
+
+.pos-layout .chart-filter button.selected {
+    color: #fff;
+    background: var(--pl-accent);
+}
+
+.pos-layout .chart-box {
+    position: relative;
+    width: 100%;
+    height: 185px;
+}
+
+.pos-layout .more-btn {
+    padding: 5px 8px;
+    border: 0;
+    color: #84928a;
+    background: transparent;
+}
+
+.pos-layout .more-btn:hover {
+    color: var(--pl-green);
+    background: #edf5ef;
+    box-shadow: none;
+}
+
+/* SAN PHAM BAN CHAY */
+.pos-layout .top-product {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 5px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    transition: background .2s;
+}
+
+.pos-layout .top-product:hover {
+    background: #f5f9f6;
+}
+
+.pos-layout .product-icon {
+    display: grid;
+    place-items: center;
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    border-radius: 9px;
+    font-size: 13px;
+}
+
+.pos-layout .mint {
+    color: #42a98b;
+    background: #e3f5ed;
+}
+
+.pos-layout .peach {
+    color: #d98d67;
+    background: #fff0e7;
+}
+
+.pos-layout .lavender {
+    color: #9872c7;
+    background: #f0eafb;
+}
+
+.pos-layout .product-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.pos-layout .product-info strong,
+.pos-layout .product-info small,
+.pos-layout .product-price strong,
+.pos-layout .product-price small {
+    display: block;
+}
+
+.pos-layout .product-info strong {
+    overflow: hidden;
+    color: #35463d;
+    font-size: 9px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pos-layout .product-info small {
+    margin-top: 4px;
+    color: #9aa59f;
+    font-size: 8px;
+}
+
+.pos-layout .product-price {
+    text-align: right;
+}
+
+.pos-layout .product-price strong {
+    color: #34473c;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.pos-layout .product-price small {
+    margin-top: 4px;
+    font-size: 8px;
+}
+
+/* GIAO DICH */
+.pos-layout .view-all {
+    color: #159b75;
+    font-size: 8px;
+    font-weight: 700;
+}
+
+.pos-layout .view-all:hover {
+    color: #07513b;
+    text-decoration: underline;
+}
+
+.pos-layout .transaction {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 0;
+    border-bottom: 1px solid #f0f3f1;
+}
+
+.pos-layout .transaction:last-child {
+    border-bottom: 0;
+}
+
+.pos-layout .transaction-icon {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+.pos-layout .transaction-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.pos-layout .transaction-info strong,
+.pos-layout .transaction-info small,
+.pos-layout .transaction-money strong {
+    display: block;
+}
+
+.pos-layout .transaction-info strong {
+    color: #35463d;
+    font-size: 9px;
+}
+
+.pos-layout .transaction-info small {
+    margin-top: 4px;
+    color: #9aa59f;
+    font-size: 8px;
+}
+
+.pos-layout .transaction-money {
+    text-align: right;
+}
+
+.pos-layout .transaction-money strong {
+    color: #35463d;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.pos-layout .completed {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 3px 6px;
+    border-radius: 12px;
+    color: #239664;
+    background: #e2f5e9;
+    font-size: 7px;
+}
+
+/* CANH BAO TON KHO */
+.pos-layout .inventory-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 8px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+.pos-layout .inventory-item.critical {
+    background: #fff0ef;
+}
+
+.pos-layout .inventory-item.warning {
+    background: #fff8e5;
+}
+
+.pos-layout .inventory-icon {
+    display: grid;
+    place-items: center;
+    width: 27px;
+    height: 27px;
+    min-width: 27px;
+    border-radius: 50%;
+    font-size: 11px;
+}
+
+.pos-layout .critical .inventory-icon {
+    color: #d75d5d;
+    background: #ffdddd;
+}
+
+.pos-layout .warning .inventory-icon {
+    color: #bd9425;
+    background: #ffefbd;
+}
+
+.pos-layout .inventory-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.pos-layout .inventory-info strong,
+.pos-layout .inventory-info small {
+    display: block;
+}
+
+.pos-layout .inventory-info strong {
+    overflow: hidden;
+    color: #4a4c42;
+    font-size: 8px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pos-layout .inventory-info small {
+    margin-top: 4px;
+    font-size: 7px;
+}
+
+.pos-layout .critical .inventory-info small {
+    color: #cb6868;
+}
+
+.pos-layout .warning .inventory-info small {
+    color: #b99532;
+}
+
+.pos-layout .reorder {
+    padding: 5px 7px;
+    border: 0;
+    border-radius: 12px;
+    font-size: 7px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.pos-layout .reorder.red {
+    color: #fff;
+    background: #df6262;
+}
+
+.pos-layout .reorder.yellow {
+    color: #fff;
+    background: #d6ad38;
+}
+
+.pos-layout .page-footer {
+    padding: 13px 0 5px;
+    color: #a0aaa4;
+    font-size: 8px;
+    text-align: center;
+}
+
+/* COT BAN HANG NHANH BEN PHAI */
+.pos-layout > .quick-sale {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    min-height: 650px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-left: 1px solid var(--pl-border);
+    background: #fff;
+}
+
+.pos-layout .quick-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 19px 13px 13px;
+}
+
+.pos-layout .quick-heading h3 {
+    margin: 0;
+    color: #294437;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.pos-layout .online-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #20b77e;
+    box-shadow: 0 0 0 3px #e3f6ed;
+}
+
+.pos-layout .search-product {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 12px 14px;
+    padding: 9px 10px;
+    border: 1px solid #e3eae5;
+    border-radius: 8px;
+    color: #9aa69f;
+    background: #fbfcfb;
+}
+
+.pos-layout .search-product:focus-within {
+    border-color: #65b99c;
+    box-shadow: 0 0 0 3px rgba(13,169,130,.08);
+}
+
+.pos-layout .search-product input {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    outline: 0;
+    border: 0;
+    color: #34463b;
+    background: transparent;
+    font-size: 9px;
+}
+
+.pos-layout .category-area {
+    padding: 0 12px 12px;
+    border-bottom: 1px solid #edf1ee;
+}
+
+.pos-layout .category-area h4 {
+    margin: 0 0 9px;
+    color: #68786f;
+    font-size: 9px;
+}
+
+.pos-layout .category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.pos-layout .category-btn {
+    padding: 6px 8px;
+    border: 0;
+    border-radius: 15px;
+    color: #75847b;
+    background: #f0f4f1;
+    font-size: 8px;
+    transition: .2s;
+}
+
+.pos-layout .category-btn:hover {
+    color: #087653;
+    background: #e1f2e9;
+    box-shadow: none;
+}
+
+.pos-layout .category-btn.active {
+    color: #fff;
+    background: var(--pl-accent);
+}
+
+.pos-layout .sale-products {
+    max-height: 225px;
+    overflow-y: auto;
+    padding: 8px 11px;
+}
+
+.pos-layout .sale-product {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 5px;
+    border: 0;
+    border-radius: 8px;
+    color: #34463b;
+    background: #fff;
+    text-align: left;
+    transition: background .2s, transform .2s;
+}
+
+.pos-layout .sale-product:hover {
+    background: #f0f8f3;
+    transform: translateX(2px);
+    box-shadow: none;
+}
+
+.pos-layout .sale-product-icon {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.pos-layout .sale-product span {
+    flex: 1;
+    min-width: 0;
+    font-size: 8px;
+    font-weight: 600;
+}
+
+.pos-layout .sale-product strong {
+    color: #24543b;
+    font-size: 8px;
+    white-space: nowrap;
+}
+
+/* GIO HANG */
+.pos-layout .cart-section {
+    flex: 1;
+    min-height: 80px;
+    overflow-y: auto;
+    padding: 12px;
+    border-top: 1px solid #edf1ee;
+}
+
+.pos-layout .cart-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.pos-layout .cart-title h4 {
+    margin: 0;
+    color: #294437;
+    font-size: 10px;
+}
+
+.pos-layout .cart-title span {
+    color: #96a29b;
+    font-size: 8px;
+}
+
+.pos-layout .empty-cart {
+    padding: 23px 5px;
+    color: #a1ada5;
+    text-align: center;
+}
+
+.pos-layout .empty-cart i {
+    display: block;
+    margin-bottom: 9px;
+    color: #a7cdb8;
+    font-size: 25px;
+}
+
+.pos-layout .empty-cart p {
+    margin: 0 0 5px;
+    color: #65776c;
+    font-size: 9px;
+}
+
+.pos-layout .empty-cart small {
+    font-size: 8px;
+}
+
+.pos-layout .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 7px;
+    padding: 8px 6px;
+    border-radius: 8px;
+    background: #f5f8f6;
+}
+
+.pos-layout .cart-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.pos-layout .cart-item-info strong,
+.pos-layout .cart-item-info small {
+    display: block;
+}
+
+.pos-layout .cart-item-info strong {
+    overflow: hidden;
+    color: #35483d;
+    font-size: 8px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pos-layout .cart-item-info small {
+    margin-top: 4px;
+    color: #89978f;
+    font-size: 8px;
+}
+
+.pos-layout .quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pos-layout .quantity-control button {
+    width: 19px;
+    height: 19px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: #315c45;
+    background: #e2eee6;
+    font-size: 12px;
+    line-height: 19px;
+}
+
+.pos-layout .quantity-control button:hover {
+    color: #fff;
+    background: var(--pl-green);
+    box-shadow: none;
+}
+
+.pos-layout .quantity-control span {
+    min-width: 10px;
+    color: #35483d;
+    font-size: 8px;
+    text-align: center;
+}
+
+.pos-layout .remove-item {
+    padding: 4px;
+    border: 0;
+    color: #d56d6d;
+    background: transparent;
+    font-size: 10px;
+}
+
+.pos-layout .remove-item:hover {
+    color: #b83e3e;
+    background: #fdeaea;
+    box-shadow: none;
+}
+
+/* THANH TOAN */
+.pos-layout .checkout-area {
+    padding: 12px;
+    border-top: 1px solid #e9efeb;
+    background: #fff;
+    box-shadow: 0 -4px 15px rgba(20,60,35,.035);
+}
+
+.pos-layout .checkout-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 9px;
+    color: #849188;
+    font-size: 8px;
+}
+
+.pos-layout .checkout-row strong {
+    color: #405348;
+    font-size: 9px;
+}
+
+.pos-layout .checkout-total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 0;
+    margin-top: 2px;
+    border-top: 1px solid #edf1ee;
+    color: #294437;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.pos-layout .checkout-total strong {
+    color: #07513b;
+    font-size: 13px;
+}
+
+.pos-layout .checkout-btn {
+    width: 100%;
+    padding: 11px 8px;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    background: #0da982;
+    font-size: 9px;
+    font-weight: 700;
+    transition: .2s ease;
+}
+
+.pos-layout .checkout-btn:hover {
+    color: #fff;
+    background: #087f61;
+    box-shadow: 0 5px 13px rgba(13,169,130,.2);
+    transform: translateY(-1px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1250px) {
+    .pos-layout {
+        grid-template-columns: 195px minmax(0, 1fr);
+    }
+
+    .pos-layout > .quick-sale {
+        display: none;
+    }
+
+    .pos-layout .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 850px) {
+    .pos-layout {
+        grid-template-columns: 175px minmax(0, 1fr);
+    }
+
+    .pos-layout .middle-grid,
+    .pos-layout .bottom-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .pos-layout .topbar-center {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .pos-layout {
+        display: block;
+    }
+
+    .pos-layout > .sidebar {
+        position: fixed;
+        z-index: 30;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 218px;
+        height: 100vh;
+        min-height: 0;
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+    }
+
+    body.sidebar-open .pos-layout > .sidebar {
+        transform: translateX(0);
+    }
+
+    .pos-layout .mobile-menu {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+    }
+
+    .pos-layout .topbar {
+        min-height: 58px;
+        padding: 9px 12px;
+    }
+
+    .pos-layout .dashboard-content {
+        padding: 17px 12px;
+    }
+
+    .pos-layout .stats-grid {
+        gap: 8px;
+    }
+
+    .pos-layout .stat-card {
+        padding: 11px 9px;
+    }
+
+    .pos-layout .stat-info h2 {
+        font-size: 14px;
+    }
+
+    .pos-layout .user-details,
+    .pos-layout .user-arrow {
+        display: none;
+    }
+
+    .pos-layout .page-heading h1 {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 380px) {
+    .pos-layout .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* ===== THANH NGÀY THÁNG VÀ TÌM KIẾM ===== */
+
+.date-search-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: white;
+}
+
+.date-display {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.calendar-btn,
+.date-search button {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 11px;
+    cursor: pointer;
+    background: #fff;
+    color: #07583e;
+}
+
+.calendar-btn:hover,
+.date-search button:hover {
+    background: #e1f1e7;
+}
+
+.date-search {
+    display: flex;
+    gap: 6px;
+}
+
+.date-search input {
+    width: 155px;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+}
+
+.calendar-popup {
+    display: none;
+    position: absolute;
+    z-index: 999;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 290px;
+    padding: 15px;
+    background: white;
+    color: #26382f;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.2);
+}
+
+.calendar-popup.show {
+    display: block;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.calendar-header button {
+    border: none;
+    background: #e8f2ec;
+    color: #07583e;
+    padding: 7px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.calendar-grid span {
+    padding: 8px 2px;
+    font-size: 12px;
+}
+
+.calendar-grid .day {
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.calendar-grid .day:hover {
+    background: #dcefe4;
+}
+
+.calendar-grid .selected {
+    background: #07583e;
+    color: white;
+}
+
+.calendar-grid .today {
+    border: 1px solid #07583e;
+}
+
+@media (max-width: 768px) {
+    .date-search-area {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}

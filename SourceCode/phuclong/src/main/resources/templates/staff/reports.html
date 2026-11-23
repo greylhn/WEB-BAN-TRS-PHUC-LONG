@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phúc Long - Báo cáo cơ bản</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}" href="/css/admin.css">
+</head>
+<body class="staff-dashboard">
+
+<div class="staff-layout">
+    <!-- SIDEBAR TRÁI -->
+    <aside class="staff-sidebar">
+        <div class="sidebar-brand">
+            <img th:src="@{/images/logo.jpg}" src="/images/logo.jpg" alt="Phúc Long Logo">
+            <div>
+                <h2>PHÚC LONG</h2>
+                <span style="font-size: 11px; color: rgba(255,255,255,0.75);">SINCE 1968</span>
+            </div>
+        </div>
+
+        <nav>
+            <a href="/staff/dashboard">Tổng quan</a>
+            <a href="/staff/orders">Quản lý đơn hàng</a>
+            <a href="/staff/reports" class="active">Báo cáo cơ bản</a>
+        </nav>
+
+        <div class="sidebar-version">
+            Phúc Long Staff Portal • MVP
+        </div>
+    </aside>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="staff-main">
+        <header class="staff-topbar">
+            <h2>Báo cáo vận hành & doanh thu cơ bản</h2>
+            <div style="display: flex; align-items: center; gap: 14px; font-size: 13px;">
+                <span id="liveDateTime" style="color: var(--text-muted); font-weight: 600;"></span>
+                <span style="background: var(--pl-green-light); color: var(--pl-green-dark); padding: 6px 12px; border-radius: 999px; font-weight: 600;">
+                    Nhân viên / Quản lý
+                </span>
+            </div>
+        </header>
+
+        <main class="staff-content">
+            <div class="section-heading" style="margin-top: 0;">
+                <div>
+                    <h2>Tổng hợp doanh thu & trạng thái đơn</h2>
+                    <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+                        Doanh thu hợp lệ chỉ tính các đơn ở trạng thái <strong>Hoàn tất (COMPLETED)</strong>, loại trừ đơn <strong>Đã hủy (CANCELLED)</strong>.
+                    </p>
+                </div>
+                <a href="/staff/orders" class="secondary-btn">← Quay lại quản lý đơn</a>
+            </div>
+
+            <!-- 4 THẺ CHỈ SỐ BÁO CÁO -->
+            <section class="dashboard-cards">
+                <div class="stat-card">
+                    <h3>Doanh thu hợp lệ</h3>
+                    <p id="repValidRevenue">0đ</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Đơn hoàn tất</h3>
+                    <p id="repCompletedCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Giá trị trung bình / đơn</h3>
+                    <p id="repAvgOrderValue">0đ</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Đơn đã hủy (loại trừ)</h3>
+                    <p id="repCancelledCount" style="color: #b91c1c;">0</p>
+                </div>
+            </section>
+
+            <!-- 2 PANEL CHI TIẾT BÁO CÁO -->
+            <section class="dashboard-bottom">
+                <!-- Thống kê số lượng theo từng trạng thái -->
+                <div class="dashboard-panel">
+                    <h3>Phân bổ đơn hàng theo trạng thái</h3>
+                    <div id="repStatusBreakdown" style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;"></div>
+                </div>
+
+                <!-- Top món bán chạy (tính trên đơn COMPLETED) -->
+                <div class="dashboard-panel">
+                    <h3>Món bán chạy (từ đơn hoàn tất)</h3>
+                    <div id="repTopProducts" style="display: flex; flex-direction: column; gap: 10px; font-size: 14px;"></div>
+                </div>
+            </section>
+
+            <!-- BẢNG ĐỐI SOÁT ĐƠN HOÀN TẤT -->
+            <div class="section-heading">
+                <h2>Danh sách đơn tính doanh thu (COMPLETED)</h2>
+            </div>
+            <div class="order-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Mã đơn</th>
+                        <th>Khách hàng</th>
+                        <th>Thời gian</th>
+                        <th>Số lượng món</th>
+                        <th>Doanh thu ghi nhận</th>
+                    </tr>
+                    </thead>
+                    <tbody id="repCompletedTableBody"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script th:src="@{/js/staff.js}" src="/js/staff.js"></script>
+</body>
+</html>
