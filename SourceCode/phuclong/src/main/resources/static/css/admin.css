@@ -1,6 +1,25 @@
+/* =========================================================
+   PHUC LONG POS - ADMIN.CSS
+   THU TU QUAN LY TU TREN XUONG:
+   1. Nen tang va bien mau
+   2. LAYOUT DUNG CHUNG: Sidebar, Topbar, dong ho, lich
+   3. DASHBOARD
+   4. ORDERS TAI QUAY
+   5. ORDERS - Quan ly don hang
+   6. DELIVERY - Giao hang
+   7. REPORTS - Bao cao
+   8. PROFILE - Ho so nhan vien
+   9. RESPONSIVE - Dieu chinh man hinh nho
+
+   Dong ho HTML + JavaScript nam trong layout.html.
+   CSS cua dong ho nam trong muc LAYOUT, khong chen cuoi file.
+   ========================================================= */
+
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
 
-/* PHUC LONG POS DASHBOARD - CSS dong bo voi dashboard.html */
+/* CSS DUNG CHUNG CHO CAC TRANG NHAN VIEN PHUC LONG POS.
+   Cac quy tac va kich thuoc dung chung duoc dat trong LAYOUT.
+   CSS rieng tung trang nam trong muc tuong ung ben duoi. */
 :root {
     --pl-green: #07513b;
     --pl-green-dark: #043f31;
@@ -42,10 +61,16 @@ a {
     text-decoration: none;
 }
 
-/* Khung tong: sidebar | dashboard | ban hang nhanh */
+/* =========================================================
+   2. LAYOUT DUNG CHUNG - KHUNG, SIDEBAR, TOPBAR, DONG HO, LICH
+   ========================================================= */
+
+/* MUC 1 - KHUNG TONG DASHBOARD
+   HTML: dashboard.html (va trang nao tai su dung .pos-layout)
+   Class can co: .pos-layout, .sidebar, .main-area */
 .pos-layout {
     display: grid;
-    grid-template-columns: 218px minmax(430px, 1fr) 292px;
+    grid-template-columns: 218px minmax(0, 1fr);
     width: 100%;
     max-width: 1920px;
     min-height: 100vh;
@@ -53,7 +78,9 @@ a {
     background: var(--pl-bg);
 }
 
-/* SIDEBAR */
+/* MUC 2 - SIDEBAR / MENU BEN TRAI
+   HTML: dashboard.html, orders.html, counter-orders.html, reports.html, profile.html
+   Chi ap dung cho trang co .sidebar va cac class menu ben duoi. */
 .pos-layout > .sidebar {
     position: sticky;
     top: 0;
@@ -219,7 +246,9 @@ a {
     color: #fff;
 }
 
-/* KHU VUC NOI DUNG */
+/* MUC 3 - TOPBAR VA NOI DUNG CHINH
+   HTML: dashboard.html va cac trang dung chung layout .pos-layout
+   Class: .main-area, .topbar, .dashboard-content, .page-heading. */
 .pos-layout > .main-area {
     min-width: 0;
     background: var(--pl-bg);
@@ -258,6 +287,61 @@ a {
     display: flex;
     align-items: center;
     gap: 9px;
+}
+
+/* LIEN KET TAI KHOAN - AVATAR BEN TRAI, THONG TIN BEN PHAI
+   HTML trong layout.html: <a class="user-profile"> chua .user-avatar + .user-details.
+   Giu lien ket gon trong topbar, khong lam phong to hoac xuong dong. */
+.pos-layout .topbar-user > .user-profile {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 9px;
+    width: auto;
+    min-width: 0;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: inherit;
+    background: transparent;
+    text-decoration: none;
+    line-height: normal;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.pos-layout .topbar-user > .user-profile .user-avatar {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    margin: 0;
+}
+
+.pos-layout .topbar-user > .user-profile .user-details {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.pos-layout .topbar-user > .user-profile .user-details strong,
+.pos-layout .topbar-user > .user-profile .user-details small {
+    display: block;
+    margin-left: 0;
+    white-space: nowrap;
+}
+
+.pos-layout .topbar-user > .user-profile:hover .user-details strong {
+    color: #e7c875;
 }
 
 .pos-layout .notification-btn {
@@ -325,6 +409,14 @@ a {
     padding: 22px 18px 14px;
 }
 
+/* Noi dung cac trang con: Orders, Delivery, Reports, Profile */
+.pos-layout .page-content {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding: 24px;
+}
+
 .pos-layout .page-heading {
     margin: 0 0 18px;
 }
@@ -346,7 +438,501 @@ a {
     font-size: 10px;
 }
 
-/* THE THONG KE */
+/* MUC 8 - BO CUC DUNG CHUNG
+   HTML: dashboard.html, counter-orders.html, profile.html va trang nao
+   dung .pos-layout. Day la phan dung chung, khong phai rieng mot HTML.
+   =========================================================
+   PHẦN BỔ SUNG DÙNG CHUNG: DASHBOARD / ORDERS TẠI QUẦY / PROFILE
+   Giữ một stylesheet duy nhất: admin.css
+   ========================================================= */
+.pos-layout {
+    display: grid;
+    grid-template-columns: 218px minmax(0, 1fr);
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.pos-layout > .sidebar {
+    width: 218px;
+    min-width: 218px;
+    flex: none;
+}
+
+.pos-layout > .main-area {
+    width: auto;
+    min-width: 0;
+    max-width: none;
+}
+
+.pos-layout .topbar {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    border-radius: 0;
+    margin: 0;
+}
+
+/* ===== THANH NGÀY THÁNG VÀ TÌM KIẾM ===== */
+
+.date-search-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: white;
+}
+
+.date-display {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.calendar-btn,
+.date-search button {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 11px;
+    cursor: pointer;
+    background: #fff;
+    color: #07583e;
+}
+
+.calendar-btn:hover,
+.date-search button:hover {
+    background: #e1f1e7;
+}
+
+.date-search {
+    display: flex;
+    gap: 6px;
+}
+
+.date-search input {
+    width: 155px;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+}
+
+.calendar-popup {
+    display: none;
+    position: absolute;
+    z-index: 999;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 290px;
+    padding: 15px;
+    background: white;
+    color: #26382f;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.2);
+}
+
+.calendar-popup.show {
+    display: block;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.calendar-header button {
+    border: none;
+    background: #e8f2ec;
+    color: #07583e;
+    padding: 7px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.calendar-grid span {
+    padding: 8px 2px;
+    font-size: 12px;
+}
+
+.calendar-grid .day {
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.calendar-grid .day:hover {
+    background: #dcefe4;
+}
+
+.calendar-grid .selected {
+    background: #07583e;
+    color: white;
+}
+
+.calendar-grid .today {
+    border: 1px solid #07583e;
+}
+
+@media (max-width: 768px) {
+    .date-search-area {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
+
+/* =====================================
+   KHUNG NGÀY VÀ GIỜ TRÊN TOPBAR
+===================================== */
+
+/* KHUNG NGÀY VÀ GIỜ */
+.pos-layout .date-display {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 4px;
+
+    width: auto;
+    min-width: 0;
+    height: 42px;
+
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* NGÀY THÁNG */
+.pos-layout #currentDate {
+    display: inline-block;
+    width: auto;
+    min-width: 0;
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+/* ĐỒNG HỒ */
+.pos-layout #currentTime {
+    display: inline-block;
+    width: 75px;
+    min-width: 75px;
+    flex: 0 0 75px;
+
+    margin-left: 0;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+/* PHẦN GIÂY */
+.pos-layout #clockSeconds {
+    display: inline-block;
+    width: 22px;
+    text-align: left;
+}
+
+/* KHUNG TÌM KIẾM NGÀY */
+.pos-layout .date-search-area {
+    flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------
+   LAYOUT - QUY TAC CHU VA KICH THUOC DUNG CHUNG
+   Dat tai day de tat ca trang su dung cung mot quy chuan.
+   Muon doi font/co chu chung, uu tien chinh trong muc nay.
+   --------------------------------------------------------- */
+
+/* =========================================================
+   LAYOUT - DONG NHAT CO CHU TOAN BO CAC TRANG NHAN VIEN
+   HTML ap dung:
+   - dashboard.html
+   - counter-orders.html
+   - orders.html
+   - delivery.html
+   - reports.html
+
+   QUY TAC:
+   - Day la khu vuc TAP TRUNG de chinh co chu.
+   - Dashboard/counter-orders dung .dashboard-content.
+   - Orders/delivery/reports dung .page-content.
+   - Cac trang deu dung .pos-layout, .sidebar, .topbar.
+   - Khong can sua font-size o cac muc phia tren neu muon doi
+     co chu chung; hay sua cac gia tri tai muc LAYOUT nay.
+   ========================================================= */
+
+/* 12.1 - Font chu chung
+   HTML: tat ca 5 trang tren.
+   Ghi de font Arial trong style noi bo cua orders.html/delivery.html. */
+
+/* 12.1 - FONT CHU CHUNG */
+html,
+body,
+body .pos-layout,
+body .pos-layout * {
+    font-family: 'Be Vietnam Pro', 'Segoe UI', Arial, sans-serif !important;
+}
+
+/* 12.1.1 - KHÔI PHỤC FONT AWESOME */
+.pos-layout i.fa-solid,
+.pos-layout i.fas {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+}
+
+.pos-layout i.fa-regular,
+.pos-layout i.far {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 400 !important;
+}
+
+.pos-layout i.fa-brands,
+.pos-layout i.fab {
+    font-family: "Font Awesome 6 Brands" !important;
+    font-weight: 400 !important;
+}
+
+/* 12.2 - Co chu mac dinh va noi dung chinh
+   HTML: dashboard.html, counter-orders.html, orders.html,
+         delivery.html, reports.html. */
+body,
+.pos-layout {
+    font-size: 14px !important;
+}
+
+.pos-layout .dashboard-content,
+.pos-layout .counter-orders-content,
+.pos-layout .page-content {
+    font-size: 14px !important;
+}
+
+/* 12.3 - Tieu de trang
+   HTML: dashboard.html, counter-orders.html, orders.html,
+         delivery.html, reports.html.
+   Bao gom ca h1 (Dashboard) va h2 (cac trang con). */
+.pos-layout .page-heading h1,
+.pos-layout .page-heading h2 {
+    font-size: 24px !important;
+    line-height: 1.35 !important;
+    font-weight: 700 !important;
+}
+
+.pos-layout .page-heading p {
+    font-size: 13px !important;
+    line-height: 1.6;
+}
+
+/* 12.4 - Sidebar dung chung
+   HTML: ca 5 trang; cac class .brand-name, .menu-label,
+         .menu-link, .sidebar-bottom, .logout-link. */
+.pos-layout .brand-name h2 {
+    font-size: 16px !important;
+}
+
+.pos-layout .brand-name span {
+    font-size: 10px !important;
+}
+
+.pos-layout .menu-label {
+    font-size: 11px !important;
+}
+
+.pos-layout .menu-link {
+    font-size: 14px !important;
+}
+
+.pos-layout .sidebar-bottom h4 {
+    font-size: 13px !important;
+}
+
+.pos-layout .sidebar-bottom p,
+.pos-layout .support-btn,
+.pos-layout .logout-link {
+    font-size: 12px !important;
+}
+
+/* 12.5 - Topbar dung chung
+   HTML: ca 5 trang. Ho tro ca topbar-left va topbar-title
+         vi cac HTML dang dung hai ten class khac nhau. */
+.pos-layout .topbar-left {
+    font-size: 14px !important;
+}
+
+.pos-layout .topbar-title {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+
+.pos-layout .topbar-center,
+.pos-layout .date-display {
+    font-size: 13px !important;
+}
+
+.pos-layout .date-search input,
+.pos-layout .date-search button {
+    font-size: 12px !important;
+}
+
+.pos-layout .user-details strong {
+    font-size: 13px !important;
+}
+
+.pos-layout .user-details small {
+    font-size: 11px !important;
+}
+
+/* 12.6 - The thong ke
+   HTML: dashboard.html dung .stat-info.
+   HTML: orders.html, delivery.html, reports.html dung
+         .stat-top va .stat-number.
+   Cac nhan thong ke va so lieu duoc dua ve cung cap. */
+.pos-layout .stat-info > span,
+.pos-layout .stat-top {
+    font-size: 13px !important;
+}
+
+.pos-layout .stat-info h2,
+.pos-layout .stat-number {
+    font-size: 23px !important;
+    line-height: 1.3 !important;
+    font-weight: 700 !important;
+}
+
+.pos-layout .stat-info small {
+    font-size: 11px !important;
+}
+
+/* 12.7 - Tieu de cac the/khung noi dung
+   HTML: dashboard.html dung .card-heading.
+   HTML: counter-orders.html dung .quick-heading.
+   HTML: orders.html, delivery.html, reports.html dung
+         .filter-title va .table-header h3. */
+.pos-layout .card-heading h3,
+.pos-layout .quick-heading h3,
+.pos-layout .filter-title,
+.pos-layout .table-header h3 {
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+    font-weight: 700 !important;
+}
+
+.pos-layout .card-heading p {
+    font-size: 12px !important;
+}
+
+/* 12.8 - Noi dung san pham/giao dich
+   HTML: dashboard.html va counter-orders.html. */
+.pos-layout .product-info strong,
+.pos-layout .product-price strong,
+.pos-layout .transaction-info strong,
+.pos-layout .transaction-money strong {
+    font-size: 13px !important;
+}
+
+.pos-layout .product-info small,
+.pos-layout .product-price small,
+.pos-layout .transaction-info small,
+.pos-layout .inventory-info small {
+    font-size: 11px !important;
+}
+
+.pos-layout .inventory-info strong {
+    font-size: 12px !important;
+}
+
+/* 12.9 - Orders tai quay
+   HTML: counter-orders.html; can co .counter-orders-content. */
+.counter-orders-content .sale-product span,
+.counter-orders-content .sale-product strong {
+    font-size: 13px !important;
+}
+
+.counter-orders-content .category-area h4,
+.counter-orders-content .cart-title h4 {
+    font-size: 14px !important;
+}
+
+.counter-orders-content .category-btn,
+.counter-orders-content .cart-title span,
+.counter-orders-content .cart-item-info strong,
+.counter-orders-content .cart-item-info small {
+    font-size: 12px !important;
+}
+
+.counter-orders-content .checkout-row,
+.counter-orders-content .checkout-row strong {
+    font-size: 13px !important;
+}
+
+.counter-orders-content .checkout-total {
+    font-size: 15px !important;
+}
+
+.counter-orders-content .checkout-total strong {
+    font-size: 19px !important;
+}
+
+.counter-orders-content .checkout-btn {
+    font-size: 14px !important;
+}
+
+/* 12.10 - O nhap, nut, bo loc va bang
+   HTML: orders.html, delivery.html, reports.html;
+   cac nut/bo loc tren cac trang khac cung duoc dong bo. */
+.pos-layout input,
+.pos-layout select,
+.pos-layout textarea,
+.pos-layout button {
+    font-size: 13px !important;
+}
+
+.pos-layout .filter-grid input,
+.pos-layout .filter-grid select,
+.pos-layout .filter-grid button {
+    font-size: 13px !important;
+}
+
+.pos-layout table th,
+.pos-layout table td {
+    font-size: 13px !important;
+}
+
+.pos-layout .status {
+    font-size: 12px !important;
+}
+
+.pos-layout .pagination {
+    font-size: 12px !important;
+}
+
+/* 12.11 - Cac thanh phan nho phu tro
+   HTML: cac trang co .page-footer, .view-all, .more-btn. */
+.pos-layout .page-footer,
+.pos-layout .view-all {
+    font-size: 12px !important;
+}
+
+.pos-layout .more-btn {
+    font-size: 14px !important;
+}
+
+
+/* =========================================================
+   3. DASHBOARD
+   ========================================================= */
+
+/* MUC 4 - CAC THE THONG KE
+   HTML: dashboard.html
+   Class: .stats-grid, .stat-card, .stat-info. */
 .pos-layout .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -444,7 +1030,9 @@ a {
     background: #fff5d9;
 }
 
-/* CAC KHOI BIEU DO VA SAN PHAM */
+/* MUC 5 - BIEU DO / CAC KHOI NOI DUNG DASHBOARD
+   HTML: dashboard.html
+   Class: cac khoi bieu do, card va khu vuc san pham. */
 .pos-layout .middle-grid,
 .pos-layout .bottom-grid {
     display: grid;
@@ -530,7 +1118,9 @@ a {
     box-shadow: none;
 }
 
-/* SAN PHAM BAN CHAY */
+/* MUC 5A - SAN PHAM BAN CHAY
+   HTML: dashboard.html
+   Class: .product-info, .product-price va cac class san pham lien quan. */
 .pos-layout .top-product {
     display: flex;
     align-items: center;
@@ -611,7 +1201,9 @@ a {
     font-size: 8px;
 }
 
-/* GIAO DICH */
+/* MUC 5B - GIAO DICH GAN DAY
+   HTML: dashboard.html
+   Class: cac class .transaction-... */
 .pos-layout .view-all {
     color: #159b75;
     font-size: 8px;
@@ -687,7 +1279,9 @@ a {
     font-size: 7px;
 }
 
-/* CANH BAO TON KHO */
+/* MUC 5C - CANH BAO TON KHO
+   HTML: dashboard.html
+   Class: cac class .inventory-..., .completed, .reorder. */
 .pos-layout .inventory-item {
     display: flex;
     align-items: center;
@@ -782,7 +1376,8 @@ a {
     text-align: center;
 }
 
-/* COT BAN HANG NHANH BEN PHAI */
+/* MUC 6 - COT BAN HANG NHANH TREN DASHBOARD
+   HTML: dashboard.html (cot ban hang nhanh ben phai). */
 .pos-layout > .quick-sale {
     position: sticky;
     top: 0;
@@ -933,7 +1528,8 @@ a {
     white-space: nowrap;
 }
 
-/* GIO HANG */
+/* MUC 6A - GIO HANG TRONG KHU BAN HANG NHANH
+   HTML: dashboard.html. */
 .pos-layout .cart-section {
     flex: 1;
     min-height: 80px;
@@ -1062,7 +1658,8 @@ a {
     box-shadow: none;
 }
 
-/* THANH TOAN */
+/* MUC 6B - THANH TOAN TRONG KHU BAN HANG NHANH
+   HTML: dashboard.html. */
 .pos-layout .checkout-area {
     padding: 12px;
     border-top: 1px solid #e9efeb;
@@ -1119,7 +1716,706 @@ a {
     transform: translateY(-1px);
 }
 
-/* RESPONSIVE */
+/* =========================================================
+   4. ORDERS TAI QUAY
+   ========================================================= */
+
+/* MUC 9 - RIENG TRANG ORDERS TAI QUAY
+   HTML: counter-orders.html
+   HTML can co class .counter-orders-content bao quanh noi dung trang. */
+.counter-orders-content {
+    min-width: 0;
+    padding: 22px 20px 24px;
+}
+
+.counter-orders-content .quick-sale {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    border: 1px solid var(--pl-border);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(20,60,35,.045);
+}
+
+.counter-orders-content .quick-heading {
+    padding: 18px 20px 14px;
+}
+
+.counter-orders-content .quick-heading h3 {
+    font-size: 14px;
+}
+
+.counter-orders-content .search-product {
+    margin: 0 20px 15px;
+    padding: 11px 13px;
+}
+
+.counter-orders-content .search-product input {
+    font-size: 12px;
+}
+
+.counter-orders-content .category-area {
+    padding: 0 20px 15px;
+}
+
+.counter-orders-content .category-area h4 {
+    font-size: 11px;
+}
+
+.counter-orders-content .category-btn {
+    padding: 7px 12px;
+    font-size: 10px;
+}
+
+.counter-orders-content .sale-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 9px;
+    max-height: none;
+    overflow: visible;
+    padding: 15px 20px 18px;
+}
+
+.counter-orders-content .sale-product {
+    min-height: 62px;
+    padding: 10px;
+    border: 1px solid #edf1ee;
+    background: #fff;
+}
+
+.counter-orders-content .sale-product span,
+.counter-orders-content .sale-product strong {
+    font-size: 11px;
+}
+
+.counter-orders-content .sale-product-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+}
+
+.counter-orders-content .cart-section {
+    flex: none;
+    min-height: 130px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 16px 20px;
+    border-top: 1px solid var(--pl-border);
+}
+
+.counter-orders-content .cart-title h4 {
+    font-size: 12px;
+}
+
+.counter-orders-content .cart-title span,
+.counter-orders-content .cart-item-info strong,
+.counter-orders-content .cart-item-info small {
+    font-size: 10px;
+}
+
+.counter-orders-content .checkout-area {
+    padding: 16px 20px 18px;
+    border-top: 1px solid var(--pl-border);
+    border-radius: 0 0 14px 14px;
+}
+
+.counter-orders-content .checkout-row,
+.counter-orders-content .checkout-row strong {
+    font-size: 11px;
+}
+
+.counter-orders-content .checkout-total {
+    font-size: 13px;
+}
+
+.counter-orders-content .checkout-total strong {
+    font-size: 16px;
+}
+
+.counter-orders-content .checkout-btn {
+    padding: 13px;
+    font-size: 11px;
+}
+
+/* =========================================================
+   5. ORDERS - QUAN LY DON HANG
+   HTML: orders.html | wrapper: .orders-page
+   ========================================================= */
+.orders-page {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    padding: 24px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.orders-page .page-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 0 0 22px;
+}
+
+.orders-page .page-heading h2 {
+    margin: 0 0 7px;
+    padding: 0;
+    color: #07513b;
+    background: transparent;
+    font-size: 25px !important;
+    line-height: 1.35 !important;
+    font-weight: 700 !important;
+}
+
+.orders-page .page-heading p {
+    margin: 0;
+    color: #7b8981;
+    font-size: 13px;
+}
+
+.orders-page .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 17px;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    background: #07513b;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.orders-page .btn-primary:hover {
+    background: #043f31;
+}
+
+.orders-page .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0 0 22px;
+}
+
+.orders-page .stat-card {
+    /* Ghi de bo cuc flex cua the thong ke Dashboard */
+    display: block;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid #e9efec;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(0,0,0,.04);
+}
+
+.orders-page .stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0 0 13px;
+    color: #718078;
+    font-size: 13px;
+}
+
+.orders-page .stat-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    color: #07513b;
+    background: #e8f4ed;
+    font-size: 17px;
+}
+
+.orders-page .stat-number {
+    color: #26352e;
+    font-size: 26px !important;
+    line-height: 1.3 !important;
+    font-weight: 700 !important;
+}
+
+.orders-page .filter-card,
+.orders-page .table-card {
+    min-width: 0;
+    border: 1px solid #e9efec;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(0,0,0,.035);
+}
+
+.orders-page .filter-card {
+    padding: 19px;
+    margin: 0 0 20px;
+}
+
+.orders-page .filter-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 15px;
+    color: #294437;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.orders-page .filter-grid {
+    display: grid;
+    grid-template-columns: minmax(220px, 2fr) minmax(160px, 1fr) minmax(155px, 1fr);
+    gap: 13px;
+}
+
+.orders-page .filter-grid input,
+.orders-page .filter-grid select {
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #dce3de;
+    border-radius: 8px;
+    outline: none;
+    color: #26352e;
+    background: #fff;
+    font: inherit;
+}
+
+.orders-page .filter-grid input:focus,
+.orders-page .filter-grid select:focus {
+    border-color: #0da982;
+    box-shadow: 0 0 0 3px rgba(13,169,130,.10);
+}
+
+.orders-page .table-card {
+    overflow: hidden;
+}
+
+.orders-page .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #edf0ed;
+}
+
+.orders-page .table-header h3 {
+    margin: 0;
+    color: #294437;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.orders-page .table-header span {
+    color: #87948e;
+    font-size: 12px;
+}
+
+.orders-page .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.orders-page table {
+    width: 100%;
+    min-width: 780px;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+.orders-page th,
+.orders-page td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #edf0ed;
+    text-align: left;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.orders-page th {
+    color: #64736a;
+    background: #f7faf8;
+    font-weight: 600;
+}
+
+.orders-page tbody tr:hover {
+    background: #f8fbf9;
+}
+
+.orders-page .status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.orders-page .status.pending { color: #a66a00; background: #fff3d9; }
+.orders-page .status.confirmed { color: #2761ae; background: #e5efff; }
+.orders-page .status.preparing { color: #7545aa; background: #f0e8ff; }
+.orders-page .status.ready { color: #16805c; background: #e2f5ef; }
+.orders-page .status.delivering { color: #1769a5; background: #e2f1ff; }
+.orders-page .status.completed { color: #238447; background: #e3f5e8; }
+.orders-page .status.cancelled { color: #bb3333; background: #ffe8e8; }
+
+.orders-page .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 11px;
+    border: 0;
+    border-radius: 6px;
+    color: #07513b;
+    background: #e8f4ed;
+    cursor: pointer;
+}
+
+.orders-page .action-btn:hover {
+    background: #d8eee1;
+}
+
+.orders-page .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 19px;
+    color: #718078;
+    font-size: 12px;
+}
+
+.orders-page .pagination button {
+    margin-left: 5px;
+    padding: 8px 13px;
+    border: 1px solid #dce3de;
+    border-radius: 6px;
+    color: #07513b;
+    background: #fff;
+    cursor: pointer;
+}
+
+.orders-page .pagination button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+@media (max-width: 1100px) {
+    .orders-page .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .pos-layout .orders-page { padding: 17px 13px; }
+    .orders-page .filter-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .orders-page .stats-grid { grid-template-columns: 1fr; }
+    .orders-page .page-heading h2 { font-size: 21px; }
+}
+
+/* =========================================================
+   6. DELIVERY - QUAN LY GIAO HANG
+   HTML: delivery.html | wrapper: .delivery-page
+   ========================================================= */
+.delivery-page {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    padding: 24px;
+    box-sizing: border-box;
+}
+.delivery-page .page-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 0 0 22px;
+}
+.delivery-page .page-heading h2 {
+    margin: 0 0 7px;
+    color: #07513b;
+    font-size: 25px;
+    line-height: 1.35;
+    font-weight: 700;
+}
+.delivery-page .page-heading p { margin: 0; color: #7b8981; font-size: 13px; }
+.delivery-page .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0 0 22px;
+}
+.delivery-page .stat-card {
+    display: block;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid #e9efec;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(0,0,0,.04);
+}
+.delivery-page .stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0 0 13px;
+    color: #718078;
+    font-size: 13px;
+}
+.delivery-page .stat-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    color: #07513b;
+    background: #e8f4ed;
+    font-size: 17px;
+}
+.delivery-page .stat-number { color: #26352e; font-size: 26px; line-height: 1.3; font-weight: 700; }
+.delivery-page .filter-card,
+.delivery-page .table-card {
+    min-width: 0;
+    border: 1px solid #e9efec;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(0,0,0,.035);
+}
+.delivery-page .filter-card { padding: 19px; margin: 0 0 20px; }
+.delivery-page .filter-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 15px;
+    color: #294437;
+    font-size: 15px;
+    font-weight: 700;
+}
+.delivery-page .filter-grid {
+    display: grid;
+    grid-template-columns: minmax(220px, 2fr) minmax(160px, 1fr) minmax(155px, 1fr);
+    gap: 13px;
+}
+.delivery-page .filter-grid input,
+.delivery-page .filter-grid select,
+.delivery-page .delivery-select {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: 0 12px;
+    border: 1px solid #dce3de;
+    border-radius: 8px;
+    outline: none;
+    color: #26352e;
+    background: #fff;
+    font: inherit;
+}
+.delivery-page .filter-grid input:focus,
+.delivery-page .filter-grid select:focus,
+.delivery-page .delivery-select:focus {
+    border-color: #0da982;
+    box-shadow: 0 0 0 3px rgba(13,169,130,.10);
+}
+.delivery-page .table-card { overflow: hidden; }
+.delivery-page .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #edf0ed;
+}
+.delivery-page .table-header h3 { margin: 0; color: #294437; font-size: 16px; font-weight: 700; }
+.delivery-page .table-header span { color: #87948e; font-size: 12px; }
+.delivery-page .table-wrapper { width: 100%; overflow-x: auto; }
+.delivery-page table { width: 100%; min-width: 850px; border-collapse: collapse; background: #fff; }
+.delivery-page th,
+.delivery-page td { padding: 14px 16px; border-bottom: 1px solid #edf0ed; text-align: left; white-space: nowrap; font-size: 13px; }
+.delivery-page th { color: #64736a; background: #f7faf8; font-weight: 600; }
+.delivery-page tbody tr:hover { background: #f8fbf9; }
+.delivery-page .status { display: inline-block; padding: 6px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.delivery-page .status.waiting { color: #a66a00; background: #fff3d9; }
+.delivery-page .status.delivering { color: #1769a5; background: #e2f1ff; }
+.delivery-page .status.delivered { color: #238447; background: #e3f5e8; }
+.delivery-page .status.failed { color: #bb3333; background: #ffe8e8; }
+.delivery-page .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 19px;
+    color: #718078;
+    font-size: 12px;
+}
+.delivery-page .pagination button {
+    margin-left: 5px;
+    padding: 8px 13px;
+    border: 1px solid #dce3de;
+    border-radius: 6px;
+    color: #07513b;
+    background: #fff;
+    cursor: pointer;
+}
+.delivery-page .pagination button:disabled { opacity: .4; cursor: not-allowed; }
+
+/* =========================================================
+   7. REPORTS - BAO CAO KINH DOANH
+   HTML: reports.html | Ke thua staff/layout.html
+   ========================================================= */
+.reports-page {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    padding: 24px;
+    box-sizing: border-box;
+}
+.reports-page .page-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 0 0 22px;
+}
+.reports-page .page-heading h2 { margin: 0 0 7px; color: #07513b; font-size: 25px; line-height: 1.35; font-weight: 700; }
+.reports-page .page-heading p { margin: 0; color: #7b8981; font-size: 13px; }
+.reports-page .filter-card,
+.reports-page .table-card {
+    min-width: 0;
+    border: 1px solid #e9efec;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(0,0,0,.035);
+}
+.reports-page .filter-card { padding: 19px; margin: 0 0 20px; }
+.reports-page .filter-title { display: flex; align-items: center; gap: 9px; margin: 0 0 15px; color: #294437; font-size: 15px; font-weight: 700; }
+.reports-page .stats-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; margin: 0 0 22px; }
+.reports-page .stat-card { display: block; min-width: 0; padding: 18px; border: 1px solid #e9efec; border-radius: 12px; background: #fff; box-shadow: 0 3px 12px rgba(0,0,0,.04); }
+.reports-page .stat-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 13px; color: #718078; font-size: 13px; }
+.reports-page .stat-icon { display: grid; place-items: center; flex: 0 0 40px; width: 40px; height: 40px; border-radius: 10px; color: #07513b; background: #e8f4ed; font-size: 17px; }
+.reports-page .stat-number { color: #26352e; font-size: 26px; line-height: 1.3; font-weight: 700; }
+.reports-page .table-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; border-bottom: 1px solid #edf0ed; }
+.reports-page .table-header h3 { margin: 0; color: #294437; font-size: 16px; font-weight: 700; }
+.reports-page .table-header span { color: #87948e; font-size: 12px; }
+.reports-page .table-wrapper { width: 100%; overflow-x: auto; }
+.reports-page table { width: 100%; min-width: 650px; border-collapse: collapse; background: #fff; }
+.reports-page th,
+.reports-page td { padding: 14px 16px; border-bottom: 1px solid #edf0ed; text-align: left; white-space: nowrap; font-size: 13px; }
+.reports-page th { color: #64736a; background: #f7faf8; font-weight: 600; }
+.reports-page .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 10px 16px; border: 0; border-radius: 8px; color: #fff; background: #07513b; font-weight: 600; cursor: pointer; }
+.reports-page .btn-primary:hover { background: #043f31; }
+
+.reports-page .report-filter-grid { grid-template-columns: 1fr 1fr auto; align-items: end; }
+.reports-page .report-filter-grid label { display:block; margin:0 0 8px; color:#64736a; font-size:12px; }
+.reports-page .report-filter-grid input,
+.reports-page .report-filter-grid select { min-height:42px; width:100%; }
+.reports-page .report-apply { min-height:42px; white-space:nowrap; }
+.reports-page .report-note { margin:12px 0 0; color:#8a7560; font-size:11px; }
+.reports-page .report-stats .stat-card small { color:#87928b; }
+.reports-page .report-grid { display:grid; grid-template-columns:2fr 1fr; gap:16px; margin-bottom:20px; }
+.reports-page .revenue-chart { min-height:230px; padding:20px; display:flex; align-items:flex-end; gap:12px; }
+.reports-page .chart-column { flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:190px; gap:7px; }
+.reports-page .chart-value { color:#52645a; font-size:10px; white-space:nowrap; }
+.reports-page .chart-bar-wrap { height:135px; width:100%; display:flex; align-items:flex-end; justify-content:center; }
+.reports-page .chart-bar { width:min(40px,75%); min-height:4px; background:linear-gradient(180deg,#35a477,#07513b); border-radius:7px 7px 0 0; }
+.reports-page .chart-label { color:#718078; font-size:10px; white-space:nowrap; }
+.reports-page .status-summary { padding:18px; display:grid; gap:16px; }
+.reports-page .status-summary div { display:flex; align-items:center; gap:10px; color:#52645a; }
+.reports-page .status-summary strong { margin-left:auto; color:#26352e; }
+.reports-page .status-dot { width:9px; height:9px; border-radius:50%; display:inline-block; }
+.reports-page .completed-dot { background:#238447; }
+.reports-page .pending-dot { background:#e4a62c; }
+.reports-page .cancelled-dot { background:#bb3333; }
+.reports-page .report-table-card { margin-bottom:22px; }
+
+/* =========================================================
+   8. PROFILE - HO SO NHAN VIEN
+   HTML: profile.html | Ke thua staff/layout.html
+   ========================================================= */
+.profile-page .profile-layout { display:grid; grid-template-columns:minmax(220px, .72fr) minmax(0, 2fr); gap:18px; align-items:start; }
+.profile-page .profile-card { background:#fff; border:1px solid var(--pl-border); border-radius:14px; box-shadow:0 5px 18px rgba(20,55,40,.04); }
+.profile-page .profile-summary { padding:28px 20px; display:flex; flex-direction:column; align-items:center; text-align:center; }
+.profile-page .profile-avatar { width:88px; height:88px; border-radius:50%; display:grid; place-items:center; color:#07513b; background:#e6f1eb; font-size:34px; border:4px solid #f5f8f6; }
+.profile-page .profile-summary h3 { margin:17px 0 5px; font-size:16px; color:#26352f; }
+.profile-page .profile-role { color:var(--pl-muted); font-size:11px; }
+.profile-page .profile-status { display:flex; align-items:center; gap:7px; margin-top:18px; padding:8px 12px; border-radius:20px; color:#18754f; background:#e9f6ee; font-size:10px; font-weight:600; }
+.profile-page .profile-status span { width:7px; height:7px; border-radius:50%; background:#24a36a; }
+.profile-page .profile-details-card { padding:22px; }
+.profile-page .profile-section-title { display:flex; justify-content:space-between; align-items:center; padding-bottom:17px; margin-bottom:20px; border-bottom:1px solid var(--pl-border); }
+.profile-page .profile-section-title h3 { margin:0 0 5px; font-size:15px; }
+.profile-page .profile-section-title p { margin:0; color:var(--pl-muted); font-size:11px; }
+.profile-page .profile-section-title > i { color:var(--pl-gold); font-size:24px; }
+.profile-page .profile-form { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:17px; }
+.profile-page .profile-field { display:flex; flex-direction:column; gap:7px; min-width:0; }
+.profile-page .profile-field-wide { grid-column:1/-1; }
+.profile-page .profile-field label { color:#56665e; font-size:11px; font-weight:600; }
+.profile-page .profile-field input { width:100%; min-height:41px; padding:10px 12px; border:1px solid #e1e9e4; border-radius:8px; color:#26352f; background:#f8faf9; outline:none; font-size:12px; }
+.profile-page .profile-field input:disabled { color:#56665e; opacity:1; }
+.profile-page .profile-field input:not(:disabled) { background:#fff; border-color:#a9cbbb; }
+.profile-page .profile-field input:focus { border-color:var(--pl-green); box-shadow:0 0 0 3px rgba(7,81,59,.08); }
+.profile-page .profile-actions { grid-column:1/-1; display:flex; gap:10px; padding-top:5px; }
+.profile-page .profile-actions[hidden] { display:none; }
+.profile-page .profile-cancel-btn { border:1px solid #dce6e0; background:#fff; color:#56665e; padding:10px 16px; border-radius:8px; }
+.profile-page .profile-note { margin:18px 0 0; color:#8a7560; font-size:10px; line-height:1.6; }
+
+@media (max-width: 1100px) {
+    .delivery-page .stats-grid,
+    .reports-page .stats-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 760px) {
+    .delivery-page,
+    .reports-page { padding: 17px 13px; }
+    .delivery-page .filter-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+    .delivery-page .stats-grid,
+    .reports-page .stats-grid { grid-template-columns: 1fr; }
+    .delivery-page .page-heading h2,
+    .reports-page .page-heading h2 { font-size: 21px; }
+    .delivery-page .pagination { flex-wrap: wrap; }
+}
+
+@media(max-width:900px) {
+    .reports-page .report-grid { grid-template-columns:1fr; }
+    .reports-page .report-filter-grid { grid-template-columns:1fr 1fr; }
+    .reports-page .report-apply { grid-column:1/-1; }
+    .profile-page .profile-layout { grid-template-columns:1fr; }
+}
+@media(max-width:600px) {
+    .profile-page .profile-form { grid-template-columns:1fr; }
+    .profile-page .profile-field-wide,
+    .profile-page .profile-actions { grid-column:auto; }
+    .reports-page .report-filter-grid { grid-template-columns:1fr; }
+}
+
+
+/* =========================================================
+   9. RESPONSIVE - DIEU CHINH MAN HINH NHO
+   ========================================================= */
+
+/* MUC 11 - RESPONSIVE
+   HTML: tat ca trang dung .pos-layout va .counter-orders-content.
+   Dieu chinh bo cuc khi man hinh nho (tablet / dien thoai). */
 @media (max-width: 1250px) {
     .pos-layout {
         grid-template-columns: 195px minmax(0, 1fr);
@@ -1214,119 +2510,105 @@ a {
         grid-template-columns: 1fr;
     }
 }
-/* ===== THANH NGÀY THÁNG VÀ TÌM KIẾM ===== */
 
-.date-search-area {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    color: white;
+@media (max-width: 850px) {
+    .pos-layout {
+        grid-template-columns: 175px minmax(0, 1fr);
+    }
+
+    .pos-layout > .sidebar {
+        width: 175px;
+        min-width: 175px;
+    }
+
+    .counter-orders-content .sale-products {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
 }
 
-.date-display {
+@media (max-width: 600px) {
+    .pos-layout {
+        display: block;
+    }
+
+    .pos-layout > .sidebar {
+        width: 218px;
+        min-width: 218px;
+    }
+
+    .counter-orders-content {
+        padding: 17px 12px;
+    }
+
+    .counter-orders-content .quick-heading,
+    .counter-orders-content .category-area,
+    .counter-orders-content .cart-section,
+    .counter-orders-content .checkout-area {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+
+    .counter-orders-content .search-product {
+        margin-left: 13px;
+        margin-right: 13px;
+    }
+
+    .counter-orders-content .sale-products {
+        grid-template-columns: 1fr;
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+}
+
+/* RESPONSIVE - Dieu chinh co chu tren man hinh nho */
+/* 12.12 - Responsive: giu ti le co chu tren man hinh nho
+   HTML: tat ca trang dung .pos-layout. */
+@media (max-width: 750px) {
+    .pos-layout .page-heading h1,
+    .pos-layout .page-heading h2 {
+        font-size: 21px !important;
+    }
+
+    .pos-layout .stat-info h2,
+    .pos-layout .stat-number {
+        font-size: 20px !important;
+    }
+}
+
+
+/* =========================================================
+   REPORTS - THANH DIEU KHIEN GON TRONG TIEU DE
+   Ngay duoc chon tu thanh cong cu chung tren layout.html
+   ========================================================= */
+.reports-page .report-heading-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 13px;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.reports-page .report-heading-actions label {
+    color: var(--pl-muted);
+    font-size: 11px;
     font-weight: 600;
 }
-
-.calendar-btn,
-.date-search button {
-    border: none;
-    border-radius: 6px;
-    padding: 8px 11px;
-    cursor: pointer;
+.reports-page .report-heading-actions select {
+    min-height: 38px;
+    padding: 8px 30px 8px 11px;
+    border: 1px solid var(--pl-border);
+    border-radius: 8px;
+    color: #26352f;
     background: #fff;
-    color: #07583e;
-}
-
-.calendar-btn:hover,
-.date-search button:hover {
-    background: #e1f1e7;
-}
-
-.date-search {
-    display: flex;
-    gap: 6px;
-}
-
-.date-search input {
-    width: 155px;
-    padding: 8px 10px;
-    border: none;
-    border-radius: 6px;
+    font-size: 12px;
     outline: none;
 }
-
-.calendar-popup {
-    display: none;
-    position: absolute;
-    z-index: 999;
-    top: calc(100% + 12px);
-    right: 0;
-    width: 290px;
-    padding: 15px;
-    background: white;
-    color: #26382f;
-    border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0,0,0,.2);
+.reports-page .report-heading-actions select:focus {
+    border-color: var(--pl-green);
+    box-shadow: 0 0 0 3px rgba(7,81,59,.08);
 }
-
-.calendar-popup.show {
-    display: block;
-}
-
-.calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.calendar-header button {
-    border: none;
-    background: #e8f2ec;
-    color: #07583e;
-    padding: 7px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    text-align: center;
-}
-
-.calendar-grid span {
-    padding: 8px 2px;
-    font-size: 12px;
-}
-
-.calendar-grid .day {
-    cursor: pointer;
-    border-radius: 6px;
-}
-
-.calendar-grid .day:hover {
-    background: #dcefe4;
-}
-
-.calendar-grid .selected {
-    background: #07583e;
-    color: white;
-}
-
-.calendar-grid .today {
-    border: 1px solid #07583e;
-}
-
-@media (max-width: 768px) {
-    .date-search-area {
-        flex-wrap: wrap;
-        gap: 8px;
+@media (max-width: 600px) {
+    .reports-page .report-heading-actions {
+        width: 100%;
+        justify-content: flex-start;
     }
 }

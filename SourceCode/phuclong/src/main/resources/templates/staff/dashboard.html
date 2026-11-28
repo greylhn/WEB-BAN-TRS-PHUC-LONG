@@ -1,162 +1,32 @@
-
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phúc Long POS - Tổng quan</title>
-
-    <link rel="stylesheet" th:href="@{/css/admin.css}">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
 
-<div class="pos-layout">
+<!--
+    DASHBOARD KẾ THỪA layout.html
+    'dashboard' là mã menu để Sidebar tự tô sáng mục Tổng quan.
+    Chỉ phần pageContent và JavaScript riêng của Dashboard nằm ở file này.
+-->
+<th:block th:replace="~{staff/layout :: layout(
+    'Tổng quan hôm nay',
+    'dashboard',
+    ~{::pageContent}
+)}">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <th:block th:fragment="pageContent">
 
-        <div class="brand">
-            <div class="brand-logo">
-                <img th:src="@{/images/logo.jpg}" src="/images/logo.jpg" alt="Logo Phúc Long">
-            </div>
-            <div class="brand-name">
-                <h2>PHÚC LONG</h2>
-                <span>COFFEE & TEA</span>
-            </div>
-        </div>
-
-        <div class="menu-label">MENU CHÍNH</div>
-
-        <nav class="sidebar-menu">
-            <a th:href="@{/staff/dashboard}" class="menu-link active">
-                <i class="fa-solid fa-chart-pie"></i>
-                <span>Tổng quan</span>
-            </a>
-
-            <!-- Quản lý đơn hàng -->
-            <a th:href="@{/staff/orders}" class="menu-link">
-                <i class="fa-solid fa-clipboard-list"></i>
-                <span>Quản lý đơn hàng</span>
-            </a>
-
-            <!-- Giao hàng -->
-            <a th:href="@{/staff/orders(status='DELIVERING')}" class="menu-link">
-                <i class="fa-solid fa-truck"></i>
-                <span>Giao hàng</span>
-            </a>
-
-            <!-- Báo cáo -->
-            <a th:href="@{/staff/history}" class="menu-link">
-                <i class="fa-solid fa-chart-column"></i>
-                <span>Báo cáo</span>
-            </a>
-
-            <!-- Thông tin cá nhân -->
-            <a th:href="@{/staff/profile}" class="menu-link">
-                <i class="fa-solid fa-user"></i>
-                <span>Thông tin cá nhân</span>
-            </a>
-        </nav>
-
-        <div class="sidebar-bottom">
-            <div class="help-icon">
-                <i class="fa-solid fa-headset"></i>
-            </div>
-            <h4>Cần hỗ trợ?</h4>
-            <p>Liên hệ bộ phận quản lý để được hỗ trợ.</p>
-            <button class="support-btn" onclick="alert('Vui lòng liên hệ quản lý cửa hàng!')">
-                Liên hệ hỗ trợ
-            </button>
-        </div>
-
-        <a th:href="@{/logout}" class="logout-link">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            Đăng xuất
-        </a>
-
-    </aside>
-
-
-    <!-- MAIN AREA -->
-    <main class="main-area">
-
-        <!-- TOPBAR -->
-        <header class="topbar">
-
-            <div class="topbar-left">
-                <button class="mobile-menu" onclick="document.body.classList.toggle('sidebar-open')">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <span>Chào mừng bạn quay trở lại!</span>
-            </div>
-
-            <div class="topbar-center date-search-area">
-                <div class="date-display">
-                    <span id="currentDate"></span>
-                    <span id="currentTime"></span>
-
-                    <button type="button" id="openCalendar" class="calendar-btn"
-                            title="Mở lịch tháng">
-                        <i class="fas fa-calendar-alt"></i>
-                    </button>
-                </div>
-
-                <div class="date-search">
-                    <input type="text" id="dateSearch"
-                           placeholder="Tìm ngày/tháng...">
-
-                    <button type="button" id="searchDate">
-                        <i class="fas fa-search"></i>
-                    </button>
-
-                    <button type="button" id="backToday">
-                        Hôm nay
-                    </button>
-                </div>
-
-                <div id="calendarPopup" class="calendar-popup">
-                    <div class="calendar-header">
-                        <button type="button" id="prevMonth">❮</button>
-                        <strong id="calendarMonth"></strong>
-                        <button type="button" id="nextMonth">❯</button>
-                    </div>
-
-                    <div class="calendar-grid" id="calendarGrid"></div>
-                </div>
-            </div>
-
-            <div class="topbar-user">
-
-                <button class="notification-btn">
-                    <i class="fa-regular fa-bell"></i>
-                    <span class="notification-dot"></span>
-                </button>
-
-                <div class="user-avatar">NV</div>
-
-                <div class="user-details">
-                    <strong th:text="${staffName != null ? staffName : 'Nhân viên'}">
-                        Nhân viên
-                    </strong>
-                    <small>Nhân viên cửa hàng</small>
-                </div>
-
-                <i class="fa-solid fa-chevron-down user-arrow"></i>
-            </div>
-
-        </header>
-
-
-        <!-- CONTENT -->
         <div class="dashboard-content">
 
             <div class="page-heading">
-                <h1>Tổng quan hôm nay</h1>
-                <p>Xin chào! Đây là tình hình hoạt động cửa hàng hôm nay.</p>
+                <h1 id="dashboardTitle">Tổng quan hôm nay</h1>
+                <p id="dashboardSubtitle">
+                    Xin chào! Đây là tình hình hoạt động cửa hàng hôm nay.
+                </p>
             </div>
 
 
@@ -166,7 +36,7 @@
                 <div class="stat-card">
                     <div class="stat-info">
                         <span>Tổng doanh thu</span>
-                        <h2>12.850.000đ</h2>
+                        <h2 id="dashboardRevenue">12.850.000đ</h2>
                         <small class="increase">
                             <i class="fa-solid fa-arrow-up"></i> 12.5%
                             <span>so với hôm qua</span>
@@ -180,7 +50,7 @@
                 <div class="stat-card">
                     <div class="stat-info">
                         <span>Giao dịch</span>
-                        <h2>158</h2>
+                        <h2 id="dashboardTransactions">158</h2>
                         <small class="increase">
                             <i class="fa-solid fa-arrow-up"></i> 8.2%
                             <span>so với hôm qua</span>
@@ -194,7 +64,7 @@
                 <div class="stat-card">
                     <div class="stat-info">
                         <span>Khách hàng</span>
-                        <h2>64</h2>
+                        <h2 id="dashboardCustomers">64</h2>
                         <small class="decrease">
                             <i class="fa-solid fa-arrow-down"></i> 3.1%
                             <span>so với hôm qua</span>
@@ -208,7 +78,7 @@
                 <div class="stat-card">
                     <div class="stat-info">
                         <span>Giá trị trung bình</span>
-                        <h2>81.330đ</h2>
+                        <h2 id="dashboardAverage">81.330đ</h2>
                         <small class="increase">
                             <i class="fa-solid fa-arrow-up"></i> 4.3%
                             <span>so với hôm qua</span>
@@ -225,7 +95,7 @@
             <!-- CHART + TOP PRODUCTS -->
             <section class="middle-grid">
 
-                <div class="content-card sales-card">
+                <div class="content-card products-card" id="topProductsContainer">
 
                     <div class="card-heading">
                         <div>
@@ -246,7 +116,7 @@
                 </div>
 
 
-                <div class="content-card products-card">
+                <div class="content-card transactions-card" id="recentTransactionsContainer">
 
                     <div class="card-heading">
                         <div>
@@ -428,475 +298,371 @@
 
         </div>
 
-    </main>
+        <!-- Thư viện biểu đồ chỉ dùng riêng cho Dashboard -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <!-- JavaScript riêng của Dashboard: biểu đồ, bán hàng nhanh, lịch... -->
+        <script>
 
 
-    <!-- QUICK SALE RIGHT PANEL -->
-    <aside class="quick-sale">
+            // ============================================
+            // DASHBOARD - LỌC NGÀY VÀ CẬP NHẬT SỐ LIỆU
+            // ============================================
 
-        <div class="quick-heading">
-            <h3>Bán hàng nhanh</h3>
-            <span class="online-dot"></span>
-        </div>
+            document.addEventListener("DOMContentLoaded", function () {
 
-        <div class="search-product">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="productSearch"
-                   placeholder="Tìm kiếm sản phẩm...">
-        </div>
+                const title = document.getElementById("dashboardTitle");
+                const subtitle = document.getElementById("dashboardSubtitle");
 
-        <div class="category-area">
-            <h4>Danh mục sản phẩm</h4>
+                const revenueEl = document.getElementById("dashboardRevenue");
+                const transactionsEl = document.getElementById("dashboardTransactions");
+                const customersEl = document.getElementById("dashboardCustomers");
+                const averageEl = document.getElementById("dashboardAverage");
 
-            <div class="category-list">
-                <button class="category-btn active" onclick="filterCategory('all', this)">Tất cả</button>
-                <button class="category-btn" onclick="filterCategory('tea', this)">Trà</button>
-                <button class="category-btn" onclick="filterCategory('coffee', this)">Cà phê</button>
-                <button class="category-btn" onclick="filterCategory('food', this)">Đồ ăn</button>
-                <button class="category-btn" onclick="filterCategory('other', this)">Khác</button>
-            </div>
-        </div>
+                const chartCanvas = document.getElementById("salesChart");
 
-        <div class="sale-products" id="saleProducts">
-
-            <button class="sale-product" data-name="Trà sữa Phúc Long"
-                    data-category="tea" onclick="addProduct('Trà sữa Phúc Long', 55000)">
-                <div class="sale-product-icon mint">
-                    <i class="fa-solid fa-mug-hot"></i>
-                </div>
-                <span>Trà sữa Phúc Long</span>
-                <strong>55.000đ</strong>
-            </button>
-
-            <button class="sale-product" data-name="Trà đào cam sả"
-                    data-category="tea" onclick="addProduct('Trà đào cam sả', 49000)">
-                <div class="sale-product-icon peach">
-                    <i class="fa-solid fa-glass-water"></i>
-                </div>
-                <span>Trà đào cam sả</span>
-                <strong>49.000đ</strong>
-            </button>
-
-            <button class="sale-product" data-name="Cà phê sữa"
-                    data-category="coffee" onclick="addProduct('Cà phê sữa', 39000)">
-                <div class="sale-product-icon lavender">
-                    <i class="fa-solid fa-mug-saucer"></i>
-                </div>
-                <span>Cà phê sữa</span>
-                <strong>39.000đ</strong>
-            </button>
-
-            <button class="sale-product" data-name="Bánh croissant"
-                    data-category="food" onclick="addProduct('Bánh croissant', 35000)">
-                <div class="sale-product-icon yellow-icon">
-                    <i class="fa-solid fa-cookie-bite"></i>
-                </div>
-                <span>Bánh croissant</span>
-                <strong>35.000đ</strong>
-            </button>
-
-            <button class="sale-product" data-name="Trà xanh đá xay"
-                    data-category="tea" onclick="addProduct('Trà xanh đá xay', 59000)">
-                <div class="sale-product-icon mint">
-                    <i class="fa-solid fa-leaf"></i>
-                </div>
-                <span>Trà xanh đá xay</span>
-                <strong>59.000đ</strong>
-            </button>
-
-        </div>
-
-        <div class="cart-section">
-
-            <div class="cart-title">
-                <h4>Giỏ hàng</h4>
-                <span id="cartCount">0 sản phẩm</span>
-            </div>
-
-            <div class="cart-items" id="cartItems">
-                <div class="empty-cart">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                    <p>Chưa có sản phẩm</p>
-                    <small>Chọn sản phẩm để thêm vào giỏ hàng</small>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="checkout-area">
-
-            <div class="checkout-row">
-                <span>Tạm tính</span>
-                <strong id="subtotal">0đ</strong>
-            </div>
-
-            <div class="checkout-row">
-                <span>Thuế (8%)</span>
-                <strong id="tax">0đ</strong>
-            </div>
-
-            <div class="checkout-total">
-                <span>Tổng cộng</span>
-                <strong id="total">0đ</strong>
-            </div>
-
-            <button class="checkout-btn" onclick="checkout()">
-                <i class="fa-solid fa-cart-shopping"></i>
-                Tiến hành thanh toán
-            </button>
-
-        </div>
-
-    </aside>
-
-</div>
-
-
-<script>
-    // ĐỒNG HỒ
-    function updateDate() {
-        const now = new Date();
-
-        document.getElementById('currentDate').textContent =
-            now.toLocaleDateString('vi-VN', {
-                weekday: 'long',
-                day: '2-digit',
-                month: 'long',
-                year: 'numeric'
-            }) + ' | ' + now.toLocaleTimeString('vi-VN');
-    }
-
-    updateDate();
-    setInterval(updateDate, 1000);
-
-
-    // BIỂU ĐỒ
-    const ctx = document.getElementById('salesChart');
-
-    const chartData = {
-        day: {
-            labels: ['08h', '09h', '10h', '11h', '12h', '13h', '14h'],
-            data: [120, 180, 150, 300, 420, 350, 480]
-        },
-        week: {
-            labels: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
-            data: [300, 280, 450, 390, 420, 600, 520]
-        }
-    };
-
-    const salesChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: chartData.week.labels,
-            datasets: [{
-                label: 'Doanh thu (nghìn đồng)',
-                data: chartData.week.data,
-                borderColor: '#55b6d9',
-                backgroundColor: 'rgba(85,182,217,0.12)',
-                fill: true,
-                tension: 0.4,
-                borderWidth: 3,
-                pointRadius: 3
-            }, {
-                label: 'Đơn hàng',
-                data: [130, 150, 110, 160, 140, 190, 210],
-                borderColor: '#80c9bb',
-                backgroundColor: 'rgba(128,201,187,0.10)',
-                fill: true,
-                tension: 0.4,
-                borderWidth: 2,
-                pointRadius: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: { color: '#edf1f0' },
-                    ticks: { font: { size: 10 } }
-                },
-                x: {
-                    grid: { display: false },
-                    ticks: { font: { size: 10 } }
+                if (!chartCanvas || typeof Chart === "undefined") {
+                    console.error("Không tìm thấy biểu đồ hoặc thư viện Chart.js!");
+                    return;
                 }
-            }
-        }
-    });
 
-    function changeChart(type, button) {
-        document.querySelectorAll('.chart-filter button')
-            .forEach(btn => btn.classList.remove('selected'));
+                // --------------------------------------------
+                // 1. XỬ LÝ NGÀY ĐƯỢC CHỌN
+                // --------------------------------------------
 
-        button.classList.add('selected');
+                function toISO(date) {
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, "0");
+                    const day = String(date.getDate()).padStart(2, "0");
 
-        salesChart.data.labels = chartData[type].labels;
-        salesChart.data.datasets[0].data = chartData[type].data;
-        salesChart.update();
-    }
+                    return `${year}-${month}-${day}`;
+                }
 
+                function parseDate(value) {
+                    if (!value) return null;
 
-    // GIỎ HÀNG
-    let cart = [];
+                    // yyyy-mm-dd
+                    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                        const date = new Date(value + "T12:00:00");
 
-    function formatMoney(number) {
-        return number.toLocaleString('vi-VN') + 'đ';
-    }
+                        if (!Number.isNaN(date.getTime()) && toISO(date) === value) {
+                            return date;
+                        }
+                    }
 
-    function addProduct(name, price) {
-        const found = cart.find(item => item.name === name);
+                    // dd/mm/yyyy
+                    const match = value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
 
-        if (found) {
-            found.quantity++;
-        } else {
-            cart.push({ name, price, quantity: 1 });
-        }
+                    if (match) {
+                        const day = Number(match[1]);
+                        const month = Number(match[2]);
+                        const year = Number(match[3]);
 
-        renderCart();
-    }
+                        const date = new Date(year, month - 1, day, 12);
 
-    function changeQuantity(index, amount) {
-        cart[index].quantity += amount;
+                        if (
+                            date.getDate() === day &&
+                            date.getMonth() === month - 1 &&
+                            date.getFullYear() === year
+                        ) {
+                            return date;
+                        }
+                    }
 
-        if (cart[index].quantity <= 0) {
-            cart.splice(index, 1);
-        }
+                    return null;
+                }
 
-        renderCart();
-    }
+                function formatLongDate(date) {
+                    return date.toLocaleDateString("vi-VN", {
+                        weekday: "long",
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric"
+                    });
+                }
 
-    function removeProduct(index) {
-        cart.splice(index, 1);
-        renderCart();
-    }
+                let selectedDate = new Date();
+                let chartMode = "week";
 
-    function renderCart() {
-        const container = document.getElementById('cartItems');
-        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+                // Lấy ngày đã chọn trên thanh công cụ chung
+                const initialDate =
+                    window.selectedDashboardDate ||
+                    document.getElementById("dateSearch")?.value;
 
-        document.getElementById('cartCount').textContent =
-            count + ' sản phẩm';
+                const parsedInitialDate = parseDate(initialDate);
 
-        if (cart.length === 0) {
-            container.innerHTML = `
-                <div class="empty-cart">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                    <p>Chưa có sản phẩm</p>
-                    <small>Chọn sản phẩm để thêm vào giỏ hàng</small>
-                </div>`;
-        } else {
-            container.innerHTML = cart.map((item, index) => `
-                <div class="cart-item">
-                    <div class="cart-item-info">
-                        <strong>${item.name}</strong>
-                        <small>${formatMoney(item.price)}</small>
-                    </div>
+                if (parsedInitialDate) {
+                    selectedDate = parsedInitialDate;
+                }
 
-                    <div class="quantity-control">
-                        <button onclick="changeQuantity(${index}, -1)">−</button>
-                        <span>${item.quantity}</span>
-                        <button onclick="changeQuantity(${index}, 1)">+</button>
-                    </div>
+                // --------------------------------------------
+                // 2. TẠO DỮ LIỆU MINH HỌA THEO NGÀY
+                // --------------------------------------------
 
-                    <button class="remove-item"
-                            onclick="removeProduct(${index})">
-                        <i class="fa-regular fa-trash-can"></i>
-                    </button>
-                </div>
-            `).join('');
-        }
+                function createSeed(dateString) {
+                    let seed = 0;
 
-        const subtotal = cart.reduce(
-            (sum, item) => sum + item.price * item.quantity, 0
-        );
+                    for (let i = 0; i < dateString.length; i++) {
+                        seed = (seed * 31 + dateString.charCodeAt(i)) >>> 0;
+                    }
 
-        const tax = subtotal * 0.08;
-        const total = subtotal + tax;
+                    return seed || 1;
+                }
 
-        document.getElementById('subtotal').textContent = formatMoney(subtotal);
-        document.getElementById('tax').textContent = formatMoney(tax);
-        document.getElementById('total').textContent = formatMoney(total);
-    }
+                function createRandom(seed) {
+                    let value = seed;
 
-    function checkout() {
-        if (cart.length === 0) {
-            alert('Vui lòng chọn sản phẩm trước khi thanh toán!');
-            return;
-        }
+                    return function () {
+                        value = (value * 1664525 + 1013904223) >>> 0;
+                        return value / 4294967296;
+                    };
+                }
 
-        alert('Giao diện mẫu: Chức năng thanh toán sẽ được kết nối với hệ thống đơn hàng sau.');
-    }
+                function getDemoData(date) {
+                    const random = createRandom(createSeed(toISO(date)));
 
+                    const transactions = Math.floor(80 + random() * 120);
+                    const customers = Math.floor(30 + random() * 70);
+                    const average = Math.floor(60000 + random() * 40000);
 
-    // TÌM KIẾM SẢN PHẨM
-    document.getElementById('productSearch').addEventListener('input', function() {
-        const keyword = this.value.toLowerCase();
+                    const revenue = transactions * average;
 
-        document.querySelectorAll('.sale-product').forEach(product => {
-            const name = product.dataset.name.toLowerCase();
-            product.style.display = name.includes(keyword) ? 'flex' : 'none';
-        });
-    });
+                    return {
+                        revenue,
+                        transactions,
+                        customers,
+                        average
+                    };
+                }
 
+                function getChartData(date, mode) {
+                    const labels = [];
+                    const revenueData = [];
+                    const orderData = [];
 
-    // LỌC DANH MỤC
-    function filterCategory(category, button) {
-        document.querySelectorAll('.category-btn')
-            .forEach(btn => btn.classList.remove('active'));
+                    if (mode === "day") {
+                        const random = createRandom(
+                            createSeed(toISO(date) + "-day")
+                        );
 
-        button.classList.add('active');
+                        for (let hour = 8; hour <= 14; hour++) {
+                            labels.push(String(hour).padStart(2, "0") + "h");
+                            revenueData.push(
+                                Math.floor(100 + random() * 450)
+                            );
+                            orderData.push(
+                                Math.floor(50 + random() * 170)
+                            );
+                        }
+                    } else {
+                        const endDate = new Date(date);
 
-        document.querySelectorAll('.sale-product').forEach(product => {
-            const match = category === 'all' ||
-                product.dataset.category === category;
+                        for (let i = 6; i >= 0; i--) {
+                            const day = new Date(endDate);
+                            day.setDate(endDate.getDate() - i);
 
-            product.style.display = match ? 'flex' : 'none';
-        });
+                            const random = createRandom(
+                                createSeed(toISO(day))
+                            );
 
-        document.getElementById('productSearch').value = '';
-    }
-    // ===== LỊCH THÁNG VÀ TÌM KIẾM NGÀY =====
+                            labels.push(
+                                day.toLocaleDateString("vi-VN", {
+                                    weekday: "short"
+                                })
+                            );
 
-    const dateDisplay = document.getElementById("currentDate");
-    const calendarPopup = document.getElementById("calendarPopup");
-    const calendarGrid = document.getElementById("calendarGrid");
-    const calendarMonth = document.getElementById("calendarMonth");
+                            revenueData.push(
+                                Math.floor(200 + random() * 450)
+                            );
 
-    let selectedDate = new Date();
-    let viewMonth = new Date();
+                            orderData.push(
+                                Math.floor(100 + random() * 120)
+                            );
+                        }
+                    }
 
-    function formatDate(date) {
-        return date.toLocaleDateString("vi-VN", {
-            weekday: "long",
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric"
-        });
-    }
+                    return {
+                        labels,
+                        revenueData,
+                        orderData
+                    };
+                }
 
-    function updateDateDisplay() {
-        const now = new Date();
+                // --------------------------------------------
+                // 3. KHỞI TẠO BIỂU ĐỒ
+                // --------------------------------------------
 
-        dateDisplay.textContent =
-            formatDate(selectedDate) + " | " +
-            now.toLocaleTimeString("vi-VN");
-    }
+                const initialChartData = getChartData(selectedDate, chartMode);
 
-    function renderCalendar() {
-        const year = viewMonth.getFullYear();
-        const month = viewMonth.getMonth();
+                const salesChart = new Chart(chartCanvas, {
+                    type: "line",
 
-        calendarMonth.textContent =
-            `Tháng ${month + 1} năm ${year}`;
+                    data: {
+                        labels: initialChartData.labels,
 
-        calendarGrid.innerHTML = "";
+                        datasets: [
+                            {
+                                label: "Doanh thu (nghìn đồng)",
+                                data: initialChartData.revenueData,
+                                borderColor: "#55b6d9",
+                                backgroundColor: "rgba(85,182,217,0.12)",
+                                fill: true,
+                                tension: 0.4,
+                                borderWidth: 3,
+                                pointRadius: 3
+                            },
+                            {
+                                label: "Đơn hàng",
+                                data: initialChartData.orderData,
+                                borderColor: "#80c9bb",
+                                backgroundColor: "rgba(128,201,187,0.10)",
+                                fill: true,
+                                tension: 0.4,
+                                borderWidth: 2,
+                                pointRadius: 2
+                            }
+                        ]
+                    },
 
-        ["CN", "T2", "T3", "T4", "T5", "T6", "T7"]
-            .forEach(day => {
-                const el = document.createElement("span");
-                el.textContent = day;
-                calendarGrid.appendChild(el);
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: "#edf1f0"
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            },
+
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // --------------------------------------------
+                // 4. CẬP NHẬT BIỂU ĐỒ
+                // --------------------------------------------
+
+                function updateChart() {
+                    const data = getChartData(selectedDate, chartMode);
+
+                    salesChart.data.labels = data.labels;
+                    salesChart.data.datasets[0].data = data.revenueData;
+                    salesChart.data.datasets[1].data = data.orderData;
+
+                    salesChart.update();
+                }
+
+                // Giữ hoạt động cho nút Ngày / Tuần trong HTML
+                window.changeChart = function (type, button) {
+                    chartMode = type;
+
+                    document.querySelectorAll(".chart-filter button")
+                        .forEach(btn => btn.classList.remove("selected"));
+
+                    if (button) {
+                        button.classList.add("selected");
+                    }
+
+                    updateChart();
+                };
+
+                // --------------------------------------------
+                // 5. CẬP NHẬT TOÀN BỘ DASHBOARD
+                // --------------------------------------------
+
+                function updateDashboard(date) {
+                    selectedDate = new Date(date);
+
+                    const data = getDemoData(selectedDate);
+
+                    const todayISO = toISO(new Date());
+                    const selectedISO = toISO(selectedDate);
+                    const isToday = selectedISO === todayISO;
+
+                    // Tiêu đề và mô tả
+                    if (title) {
+                        title.textContent = isToday
+                            ? "Tổng quan hôm nay"
+                            : "Tổng quan ngày " + selectedDate.toLocaleDateString("vi-VN");
+                    }
+
+                    if (subtitle) {
+                        subtitle.textContent = isToday
+                            ? "Xin chào! Đây là tình hình hoạt động cửa hàng hôm nay."
+                            : "Tình hình hoạt động cửa hàng ngày " + formatLongDate(selectedDate) + ".";
+                    }
+
+                    // Các thẻ thống kê
+                    revenueEl.textContent =
+                        data.revenue.toLocaleString("vi-VN") + "đ";
+
+                    transactionsEl.textContent =
+                        data.transactions.toLocaleString("vi-VN");
+
+                    customersEl.textContent =
+                        data.customers.toLocaleString("vi-VN");
+
+                    averageEl.textContent =
+                        data.average.toLocaleString("vi-VN") + "đ";
+
+                    // Biểu đồ
+                    updateChart();
+
+                    console.log("Dashboard đã cập nhật ngày:", selectedISO);
+                }
+
+                // --------------------------------------------
+                // 6. NHẬN NGÀY TỪ THANH CÔNG CỤ CHUNG
+                // --------------------------------------------
+
+                document.addEventListener("dashboard:datechange", function (event) {
+                    const date = parseDate(event.detail?.date);
+
+                    if (!date) {
+                        console.warn("Ngày nhận được không hợp lệ:", event.detail?.date);
+                        return;
+                    }
+
+                    window.selectedDashboardDate = toISO(date);
+
+                    updateDashboard(date);
+                });
+
+                // --------------------------------------------
+                // 7. HIỂN THỊ LẦN ĐẦU
+                // --------------------------------------------
+
+                updateDashboard(selectedDate);
+
             });
 
-        const firstDay = new Date(year, month, 1).getDay();
-        const totalDays = new Date(year, month + 1, 0).getDate();
+        </script>
 
-        for (let i = 0; i < firstDay; i++) {
-            calendarGrid.appendChild(document.createElement("span"));
-        }
-
-        for (let day = 1; day <= totalDays; day++) {
-            const el = document.createElement("span");
-            const date = new Date(year, month, day);
-
-            el.textContent = day;
-            el.className = "day";
-
-            if (date.toDateString() === selectedDate.toDateString()) {
-                el.classList.add("selected");
-            }
-
-            if (date.toDateString() === new Date().toDateString()) {
-                el.classList.add("today");
-            }
-
-            el.addEventListener("click", () => {
-                selectedDate = date;
-                updateDateDisplay();
-                renderCalendar();
-                calendarPopup.classList.remove("show");
-            });
-
-            calendarGrid.appendChild(el);
-        }
-    }
-
-    document.getElementById("openCalendar").addEventListener("click", () => {
-        calendarPopup.classList.toggle("show");
-        viewMonth = new Date(selectedDate);
-        renderCalendar();
-    });
-
-    document.getElementById("prevMonth").addEventListener("click", () => {
-        viewMonth.setMonth(viewMonth.getMonth() - 1);
-        renderCalendar();
-    });
-
-    document.getElementById("nextMonth").addEventListener("click", () => {
-        viewMonth.setMonth(viewMonth.getMonth() + 1);
-        renderCalendar();
-    });
-
-    document.getElementById("backToday").addEventListener("click", () => {
-        selectedDate = new Date();
-        viewMonth = new Date();
-        updateDateDisplay();
-        renderCalendar();
-    });
-
-    document.getElementById("searchDate").addEventListener("click", searchSelectedDate);
-
-    document.getElementById("dateSearch").addEventListener("keydown", event => {
-        if (event.key === "Enter") searchSelectedDate();
-    });
-
-    function searchSelectedDate() {
-        const value = document.getElementById("dateSearch").value.trim();
-        const match = value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-
-        if (!match) {
-            alert("Nhập ngày theo định dạng dd/mm/yyyy, ví dụ 21/11/2026");
-            return;
-        }
-
-        const day = Number(match[1]);
-        const month = Number(match[2]);
-        const year = Number(match[3]);
-
-        const date = new Date(year, month - 1, day);
-
-        if (
-            date.getFullYear() !== year ||
-            date.getMonth() !== month - 1 ||
-            date.getDate() !== day ||
-            date > new Date(new Date().setHours(23, 59, 59, 999))
-        ) {
-            alert("Ngày không hợp lệ hoặc nằm trong tương lai!");
-            return;
-        }
-
-        selectedDate = date;
-        viewMonth = new Date(date);
-        updateDateDisplay();
-        renderCalendar();
-    }
-
-    updateSelectedDate();
-</script>
+    </th:block>
+</th:block>
 
 </body>
 </html>

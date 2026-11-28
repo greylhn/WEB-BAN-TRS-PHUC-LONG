@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(pageTitle, activeMenu, content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' | Phúc Long POS'">Phúc Long POS</title>
+
+    <!-- CSS dùng chung cho toàn bộ trang nhân viên -->
+    <link rel="stylesheet" th:href="@{/css/admin.css(v=20261125_2)}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+<div class="pos-layout">
+
+    <!-- ==================================================
+         SIDEBAR DÙNG CHUNG
+         Chỉ sửa menu tại đây, tất cả trang sẽ cập nhật.
+         ================================================== -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo">
+                <img th:src="@{/images/logo.jpg}"
+                     src="/images/logo.jpg"
+                     alt="Logo Phúc Long">
+            </div>
+            <div class="brand-name">
+                <h2>PHÚC LONG</h2>
+                <span>COFFEE &amp; TEA</span>
+            </div>
+        </div>
+
+        <div class="menu-label">MENU CHÍNH</div>
+
+        <nav class="sidebar-menu">
+            <a th:href="@{/staff/dashboard}"
+               class="menu-link"
+               th:classappend="${activeMenu == 'dashboard'} ? ' active' : ''">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Tổng quan</span>
+            </a>
+
+            <a th:href="@{/staff/orders}"
+               class="menu-link"
+               th:classappend="${activeMenu == 'orders'} ? ' active' : ''">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <span>Quản lý đơn hàng</span>
+            </a>
+
+            <a th:href="@{/staff/counter-orders}"
+               class="menu-link"
+               th:classappend="${activeMenu == 'counter-orders'} ? ' active' : ''">
+                <i class="fa-solid fa-cash-register"></i>
+                <span>Orders tại quầy</span>
+            </a>
+
+            <a th:href="@{/staff/delivery}"
+               class="menu-link"
+               th:classappend="${activeMenu == 'delivery'} ? ' active' : ''">
+                <i class="fa-solid fa-truck"></i>
+                <span>Giao hàng</span>
+            </a>
+
+            <a th:href="@{/staff/history}"
+               class="menu-link"
+               th:classappend="${activeMenu == 'reports'} ? ' active' : ''">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Báo cáo</span>
+            </a>
+
+            <a th:href="@{/staff/profile}"
+               class="menu-link"
+               th:classappend="${activeMenu == 'profile'} ? ' active' : ''">
+                <i class="fa-solid fa-user"></i>
+                <span>Thông tin cá nhân</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="help-icon">
+                <i class="fa-solid fa-headset"></i>
+            </div>
+            <h4>Cần hỗ trợ?</h4>
+            <p>Liên hệ bộ phận quản lý để được hỗ trợ.</p>
+            <button class="support-btn" type="button"
+                    onclick="alert('Vui lòng liên hệ quản lý cửa hàng!')">
+                Liên hệ hỗ trợ
+            </button>
+        </div>
+
+        <a th:href="@{/logout}" class="logout-link">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Đăng xuất
+        </a>
+    </aside>
+
+    <!-- ==================================================
+         KHU VỰC CHÍNH
+         Topbar dùng chung; nội dung từng trang được chèn vào.
+         ================================================== -->
+    <main class="main-area">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu" type="button"
+                        onclick="document.body.classList.toggle('sidebar-open')">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <span>Chào mừng bạn quay trở lại!</span>
+            </div>
+
+            <div class="topbar-center date-search-area">
+                <div class="date-display">
+                    <span id="currentDate"></span>
+                    <span id="currentTime"></span>
+                    <button type="button" id="openCalendar" class="calendar-btn"
+                            title="Mở lịch tháng">
+                        <i class="fas fa-calendar-alt"></i>
+                    </button>
+                </div>
+
+                <div class="date-search">
+                    <input type="text" id="dateSearch"
+                           placeholder="dd/yy/mmmm">
+                    <button type="button" id="searchDate" title="Tìm ngày">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button type="button" id="backToday">Hôm nay</button>
+                </div>
+
+                <div id="calendarPopup" class="calendar-popup">
+                    <div class="calendar-header">
+                        <button type="button" id="prevMonth">❮</button>
+                        <strong id="calendarMonth"></strong>
+                        <button type="button" id="nextMonth">❯</button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                </div>
+            </div>
+
+            <div class="topbar-user">
+                <button class="notification-btn" type="button"
+                        aria-label="Thông báo">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+
+                <a th:href="@{/staff/profile}" class="user-profile">
+                    <div class="user-avatar">NV</div>
+                    <div class="user-details">
+                        <strong th:text="${staffName != null ? staffName : 'Nhân viên'}">Nhân viên
+                        </strong>
+                        <small>Nhân viên cửa hàng</small>
+                    </div>
+                </a>
+
+                <i class="fa-solid fa-chevron-down user-arrow"></i>
+            </div>
+        </header>
+
+        <!-- NỘI DUNG RIÊNG CỦA TỪNG TRANG -->
+        <th:block th:replace="${content}">
+            <section class="page-content">
+                Nội dung trang sẽ hiển thị tại đây.
+            </section>
+        </th:block>
+    </main>
+</div>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const dateInput = document.getElementById("dateSearch");
+        const searchButton = document.getElementById("searchDate");
+        const todayButton = document.getElementById("backToday");
+
+        const calendarButton = document.getElementById("openCalendar");
+        const calendarPopup = document.getElementById("calendarPopup");
+        const calendarGrid = document.getElementById("calendarGrid");
+        const calendarMonth = document.getElementById("calendarMonth");
+        const prevMonth = document.getElementById("prevMonth");
+        const nextMonth = document.getElementById("nextMonth");
+
+        const currentDate = document.getElementById("currentDate");
+        const currentTime = document.getElementById("currentTime");
+
+        // HIỂN THỊ NGÀY VÀ GIỜ
+        // CẬP NHẬT NGÀY VÀ GIỜ
+        function updateClock() {
+            const now = new Date();
+
+            // Chỉ cập nhật ngày khi ngày thực sự thay đổi
+            const today = now.toLocaleDateString("vi-VN", {
+                weekday: "long",
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            });
+
+            if (currentDate && currentDate.textContent !== today) {
+                currentDate.textContent = today;
+            }
+
+            // Chỉ cập nhật nội dung đồng hồ
+            if (currentTime) {
+                const hours = String(now.getHours()).padStart(2, "0");
+                const minutes = String(now.getMinutes()).padStart(2, "0");
+                const seconds = String(now.getSeconds()).padStart(2, "0");
+
+                currentTime.innerHTML = `${hours}:${minutes}:<span id="clockSeconds">${seconds}</span>`;
+            }
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        if (!dateInput) return;
+
+        // ĐỔI NGÀY SANG YYYY-MM-DD
+        function convertDate(value) {
+            const match = value.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+
+            if (!match) return null;
+
+            const day = Number(match[1]);
+            const month = Number(match[2]);
+            const year = Number(match[3]);
+
+            const date = new Date(year, month - 1, day);
+
+            if (
+                date.getFullYear() !== year ||
+                date.getMonth() !== month - 1 ||
+                date.getDate() !== day
+            ) {
+                return null;
+            }
+
+            return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        }
+
+        // TÌM KIẾM NGÀY DÙNG CHUNG
+        function searchSelectedDate() {
+            const selectedDate = convertDate(dateInput.value);
+
+            if (!selectedDate) {
+                alert("Vui lòng nhập ngày hợp lệ theo dạng dd/mm/yyyy.");
+                dateInput.focus();
+                return;
+            }
+
+            const path = window.location.pathname;
+
+            if (path === "/staff/dashboard") {
+                document.dispatchEvent(
+                    new CustomEvent("dashboard:datechange", {
+                        detail: { date: selectedDate }
+                    })
+                );
+            } else if (path === "/staff/orders") {
+                const filter = document.getElementById("dateFilter");
+
+                if (filter) {
+                    filter.value = selectedDate;
+                    filter.dispatchEvent(new Event("change"));
+                }
+            } else if (path === "/staff/delivery") {
+                const filter = document.getElementById("deliveryDate");
+
+                if (filter) {
+                    filter.value = selectedDate;
+                    filter.dispatchEvent(new Event("change"));
+                }
+            } else if (path === "/staff/history") {
+                if (typeof buildReport === "function") {
+                    dateInput.value = selectedDate;
+                    buildReport();
+                }
+            }
+
+            if (calendarPopup) {
+                calendarPopup.classList.remove("show");
+            }
+        }
+
+        // NÚT TÌM KIẾM
+        if (searchButton) {
+            searchButton.addEventListener("click", searchSelectedDate);
+        }
+
+        dateInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                searchSelectedDate();
+            }
+        });
+
+        // NÚT HÔM NAY
+        if (todayButton) {
+            todayButton.addEventListener("click", function () {
+                const now = new Date();
+
+                dateInput.value =
+                    `${String(now.getDate()).padStart(2, "0")}/` +
+                    `${String(now.getMonth() + 1).padStart(2, "0")}/` +
+                    now.getFullYear();
+
+                searchSelectedDate();
+            });
+        }
+
+        // LỊCH THÁNG
+        if (calendarButton && calendarPopup && calendarGrid && calendarMonth) {
+            let currentMonth = new Date();
+            currentMonth.setDate(1);
+
+            function renderCalendar() {
+                const year = currentMonth.getFullYear();
+                const month = currentMonth.getMonth();
+
+                calendarMonth.textContent = `Tháng ${month + 1} / ${year}`;
+                calendarGrid.innerHTML = "";
+
+                ["CN", "T2", "T3", "T4", "T5", "T6", "T7"].forEach(day => {
+                    const item = document.createElement("span");
+                    item.textContent = day;
+                    calendarGrid.appendChild(item);
+                });
+
+                const firstDay = new Date(year, month, 1).getDay();
+                const totalDays = new Date(year, month + 1, 0).getDate();
+
+                for (let i = 0; i < firstDay; i++) {
+                    calendarGrid.appendChild(document.createElement("span"));
+                }
+
+                for (let day = 1; day <= totalDays; day++) {
+                    const item = document.createElement("span");
+                    item.textContent = day;
+                    item.className = "day";
+
+                    item.addEventListener("click", function () {
+                        dateInput.value =
+                            `${String(day).padStart(2, "0")}/` +
+                            `${String(month + 1).padStart(2, "0")}/` +
+                            year;
+
+                        searchSelectedDate();
+                    });
+
+                    calendarGrid.appendChild(item);
+                }
+            }
+
+            calendarButton.addEventListener("click", function (event) {
+                event.stopPropagation();
+                calendarPopup.classList.toggle("show");
+                renderCalendar();
+            });
+
+            calendarPopup.addEventListener("click", function (event) {
+                event.stopPropagation();
+            });
+
+            document.addEventListener("click", function () {
+                calendarPopup.classList.remove("show");
+            });
+
+            if (prevMonth) {
+                prevMonth.addEventListener("click", function () {
+                    currentMonth.setMonth(currentMonth.getMonth() - 1);
+                    renderCalendar();
+                });
+            }
+
+            if (nextMonth) {
+                nextMonth.addEventListener("click", function () {
+                    currentMonth.setMonth(currentMonth.getMonth() + 1);
+                    renderCalendar();
+                });
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

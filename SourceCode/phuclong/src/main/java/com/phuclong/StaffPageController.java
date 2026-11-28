@@ -26,4 +26,19 @@ public class StaffPageController {
         return "staff/delivery";
     }
 
+    @GetMapping("/staff/history")
+    public String history() {
+        return "staff/reports";
+    }
+
+    @GetMapping("/staff/counter-orders")
+    public String counterOrders() {
+        return "staff/counter-orders";
+    }
+
+    @GetMapping("/staff/profile")
+    public String profile() {
+        return "staff/profile";
+    }
+
 }

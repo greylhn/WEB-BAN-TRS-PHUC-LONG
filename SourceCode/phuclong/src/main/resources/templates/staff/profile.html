@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin cá nhân | Phúc Long POS</title>
+</head>
+<body>
+<th:block th:replace="~{staff/layout :: layout('Thông tin cá nhân', 'profile', ~{::pageContent})}">
+    <th:block th:fragment="pageContent">
+        <main class="page-content profile-page">
+            <div class="page-heading">
+                <div>
+                    <h2>Thông tin cá nhân</h2>
+                    <p>Quản lý thông tin tài khoản nhân viên của bạn</p>
+                </div>
+                <button class="btn-primary" type="button" id="profileEditBtn">
+                    <i class="fa-solid fa-pen-to-square"></i> Chỉnh sửa thông tin
+                </button>
+            </div>
+
+            <section class="profile-layout">
+                <article class="profile-card profile-summary">
+                    <div class="profile-avatar" aria-hidden="true">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <h3 th:text="${staffName != null ? staffName : 'Nhân viên Phúc Long'}">Nhân viên Phúc Long</h3>
+                    <span class="profile-role">Nhân viên cửa hàng</span>
+                    <div class="profile-status"><span></span> Tài khoản đang hoạt động</div>
+                </article>
+
+                <article class="profile-card profile-details-card">
+                    <div class="profile-section-title">
+                        <div>
+                            <h3>Thông tin tài khoản</h3>
+                            <p>Các thông tin cơ bản của nhân viên</p>
+                        </div>
+                        <i class="fa-regular fa-id-card"></i>
+                    </div>
+
+                    <form id="profileForm" class="profile-form">
+                        <div class="profile-field">
+                            <label for="profileName">Họ và tên</label>
+                            <input id="profileName" name="fullName" type="text"
+                                   th:value="${staffName}" value="Nhân viên Phúc Long" disabled>
+                        </div>
+                        <div class="profile-field">
+                            <label for="profileEmail">Email</label>
+                            <input id="profileEmail" name="email" type="email"
+                                   th:value="${staffEmail}" value="" placeholder="Chưa cập nhật" disabled>
+                        </div>
+                        <div class="profile-field">
+                            <label for="profilePhone">Số điện thoại</label>
+                            <input id="profilePhone" name="phone" type="tel"
+                                   th:value="${staffPhone}" value="" placeholder="Chưa cập nhật" disabled>
+                        </div>
+                        <div class="profile-field">
+                            <label for="profileCode">Mã nhân viên</label>
+                            <input id="profileCode" type="text"
+                                   th:value="${staffCode}" value="" placeholder="Chưa có mã nhân viên" disabled>
+                        </div>
+                        <div class="profile-field profile-field-wide">
+                            <label for="profileAddress">Địa chỉ</label>
+                            <input id="profileAddress" name="address" type="text"
+                                   th:value="${staffAddress}" value="" placeholder="Chưa cập nhật" disabled>
+                        </div>
+                        <div class="profile-actions" id="profileActions" hidden>
+                            <button class="btn-primary" type="submit">
+                                <i class="fa-solid fa-floppy-disk"></i> Lưu thay đổi
+                            </button>
+                            <button class="profile-cancel-btn" type="button" id="profileCancelBtn">Hủy</button>
+                        </div>
+                    </form>
+                    <p class="profile-note">
+                        Giao diện chỉnh sửa hiện là phần minh họa. Cần kết nối API/backend để lưu thay đổi vào cơ sở dữ liệu.
+                    </p>
+                </article>
+            </section>
+
+            <script>
+                (() => {
+                    const form = document.getElementById('profileForm');
+                    const editBtn = document.getElementById('profileEditBtn');
+                    const cancelBtn = document.getElementById('profileCancelBtn');
+                    const actions = document.getElementById('profileActions');
+                    const fields = [...form.querySelectorAll('input')];
+                    let snapshot = [];
+
+                    function setEditing(editing) {
+                        fields.forEach(field => field.disabled = !editing);
+                        actions.hidden = !editing;
+                        editBtn.hidden = editing;
+                    }
+
+                    editBtn.addEventListener('click', () => {
+                        snapshot = fields.map(field => field.value);
+                        setEditing(true);
+                    });
+
+                    cancelBtn.addEventListener('click', () => {
+                        fields.forEach((field, index) => field.value = snapshot[index]);
+                        setEditing(false);
+                    });
+
+                    form.addEventListener('submit', event => {
+                        event.preventDefault();
+                        alert('Đây là giao diện minh họa. Chưa có API lưu thông tin vào cơ sở dữ liệu.');
+                        setEditing(false);
+                    });
+                })();
+            </script>
+        </main>
+    </th:block>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{staff/layout :: layout('Orders tại quầy', 'counter-orders', ~{::pageContent})}">
+<body>
+<th:block th:fragment="pageContent">
+<div class="dashboard-content counter-orders-content">
+<div class="page-heading">
+<h1>Orders tại quầy</h1>
+<p>Tạo đơn hàng trực tiếp tại cửa hàng.</p>
+</div>
+<section class="quick-sale">
+<div class="quick-heading">
+<h3>Bán hàng nhanh</h3>
+<span class="online-dot"></span>
+</div>
+<div class="search-product">
+<i class="fa-solid fa-magnifying-glass"></i>
+<input id="productSearch" placeholder="Tìm kiếm sản phẩm..." type="text"/>
+</div>
+<div class="category-area">
+<h4>Danh mục sản phẩm</h4>
+<div class="category-list">
+<button class="category-btn active" onclick="filterCategory('all', this)">Tất cả</button>
+<button class="category-btn" onclick="filterCategory('tea', this)">Trà</button>
+<button class="category-btn" onclick="filterCategory('coffee', this)">Cà phê</button>
+<button class="category-btn" onclick="filterCategory('food', this)">Đồ ăn</button>
+<button class="category-btn" onclick="filterCategory('other', this)">Khác</button>
+</div>
+</div>
+<div class="sale-products" id="saleProducts">
+<button class="sale-product" data-category="tea" data-name="Trà sữa Phúc Long" onclick="addProduct('Trà sữa Phúc Long', 55000)">
+<div class="sale-product-icon mint">
+<i class="fa-solid fa-mug-hot"></i>
+</div>
+<span>Trà sữa Phúc Long</span>
+<strong>55.000đ</strong>
+</button>
+<button class="sale-product" data-category="tea" data-name="Trà đào cam sả" onclick="addProduct('Trà đào cam sả', 49000)">
+<div class="sale-product-icon peach">
+<i class="fa-solid fa-glass-water"></i>
+</div>
+<span>Trà đào cam sả</span>
+<strong>49.000đ</strong>
+</button>
+<button class="sale-product" data-category="coffee" data-name="Cà phê sữa" onclick="addProduct('Cà phê sữa', 39000)">
+<div class="sale-product-icon lavender">
+<i class="fa-solid fa-mug-saucer"></i>
+</div>
+<span>Cà phê sữa</span>
+<strong>39.000đ</strong>
+</button>
+<button class="sale-product" data-category="food" data-name="Bánh croissant" onclick="addProduct('Bánh croissant', 35000)">
+<div class="sale-product-icon yellow-icon">
+<i class="fa-solid fa-cookie-bite"></i>
+</div>
+<span>Bánh croissant</span>
+<strong>35.000đ</strong>
+</button>
+<button class="sale-product" data-category="tea" data-name="Trà xanh đá xay" onclick="addProduct('Trà xanh đá xay', 59000)">
+<div class="sale-product-icon mint">
+<i class="fa-solid fa-leaf"></i>
+</div>
+<span>Trà xanh đá xay</span>
+<strong>59.000đ</strong>
+</button>
+</div>
+<div class="cart-section">
+<div class="cart-title">
+<h4>Giỏ hàng</h4>
+<span id="cartCount">0 sản phẩm</span>
+</div>
+<div class="cart-items" id="cartItems">
+<div class="empty-cart">
+<i class="fa-solid fa-basket-shopping"></i>
+<p>Chưa có sản phẩm</p>
+<small>Chọn sản phẩm để thêm vào giỏ hàng</small>
+</div>
+</div>
+</div>
+<div class="checkout-area">
+<div class="checkout-row">
+<span>Tạm tính</span>
+<strong id="subtotal">0đ</strong>
+</div>
+<div class="checkout-row">
+<span>Thuế (8%)</span>
+<strong id="tax">0đ</strong>
+</div>
+<div class="checkout-total">
+<span>Tổng cộng</span>
+<strong id="total">0đ</strong>
+</div>
+<button class="checkout-btn" onclick="checkout()">
+<i class="fa-solid fa-cart-shopping"></i>
+                Tiến hành thanh toán
+            </button>
+</div>
+</section>
+</div>
+<script>
+    // GIỎ HÀNG TẠI QUẦY
+    let cart = [];
+
+    function formatMoney(number) {
+        return number.toLocaleString('vi-VN') + 'đ';
+    }
+
+    function addProduct(name, price) {
+        const found = cart.find(item => item.name === name);
+        if (found) {
+            found.quantity++;
+        } else {
+            cart.push({ name, price, quantity: 1 });
+        }
+        renderCart();
+    }
+
+    function changeQuantity(index, amount) {
+        cart[index].quantity += amount;
+        if (cart[index].quantity <= 0) cart.splice(index, 1);
+        renderCart();
+    }
+
+    function removeProduct(index) {
+        cart.splice(index, 1);
+        renderCart();
+    }
+
+    function renderCart() {
+        const container = document.getElementById('cartItems');
+        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.getElementById('cartCount').textContent = count + ' sản phẩm';
+
+        if (cart.length === 0) {
+            container.innerHTML = `
+                <div class="empty-cart">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <p>Chưa có sản phẩm</p>
+                    <small>Chọn sản phẩm để thêm vào giỏ hàng</small>
+                </div>`;
+        } else {
+            container.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <strong>${item.name}</strong>
+                        <small>${formatMoney(item.price)}</small>
+                    </div>
+                    <div class="quantity-control">
+                        <button onclick="changeQuantity(${index}, -1)">−</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="changeQuantity(${index}, 1)">+</button>
+                    </div>
+                    <button class="remove-item" onclick="removeProduct(${index})">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
+                </div>`).join('');
+        }
+
+        const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const tax = subtotal * 0.08;
+        document.getElementById('subtotal').textContent = formatMoney(subtotal);
+        document.getElementById('tax').textContent = formatMoney(tax);
+        document.getElementById('total').textContent = formatMoney(subtotal + tax);
+    }
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert('Vui lòng chọn sản phẩm trước khi thanh toán!');
+            return;
+        }
+        alert('Giao diện mẫu: Chức năng thanh toán sẽ được kết nối với hệ thống đơn hàng sau.');
+    }
+
+    // TÌM KIẾM SẢN PHẨM
+    document.getElementById('productSearch').addEventListener('input', function() {
+        const keyword = this.value.toLowerCase().trim();
+        document.querySelectorAll('.sale-product').forEach(product => {
+            const name = product.dataset.name.toLowerCase();
+            const category = document.querySelector('.category-btn.active')?.dataset.category || 'all';
+            const categoryMatch = category === 'all' || product.dataset.category === category;
+            product.style.display = name.includes(keyword) && categoryMatch ? 'flex' : 'none';
+        });
+    });
+
+    // LỌC DANH MỤC
+    function filterCategory(category, button) {
+        document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        button.dataset.category = category;
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            if (btn !== button) btn.dataset.category = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+        });
+
+        const keyword = document.getElementById('productSearch').value.toLowerCase().trim();
+        document.querySelectorAll('.sale-product').forEach(product => {
+            const categoryMatch = category === 'all' || product.dataset.category === category;
+            const nameMatch = product.dataset.name.toLowerCase().includes(keyword);
+            product.style.display = categoryMatch && nameMatch ? 'flex' : 'none';
+        });
+    }
+    document.querySelector('.category-btn.active').dataset.category = 'all';
+</script>
+</th:block>
+</body>
+</html>
